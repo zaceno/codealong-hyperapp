@@ -1,1072 +1,1057 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>Hyperapp Code-along</title>
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&display=swap"
-            rel="stylesheet"
-        />
-        <style>
-            :root {
-                font-family: Montserrat, sans-serif;
-                font-size: 14px;
-                --color-yellow: yellow;
-                --color-light-gray: #f2f2f2;
-                --color-light-blue: #b3d8db;
-                --color-pink: #f9cdda;
-                --color-blue: #4b8cca;
-                --color-gray: #bcbec0;
-                --color-brown: #754e2a;
-            }
-            * {
-                margin: 0;
-                padding: 0;
-            }
-
-            html,
-            body {
-                width: 100%;
-                height: 100%;
-                position: relative;
-                margin: 0;
-                padding: 0;
-            }
-            code {
-                font-weight: bold;
-                font-family: monospace;
-                color: var(--color-blue);
-            }
-
-            em {
-                font-weight: bold;
-                font-style: italic;
-            }
-
-            a:link {
-                color: black;
-                text-decoration: underline;
-            }
-
-            a:visited,
-            a:active {
-                color: #888;
-            }
-
-            body > header {
-                background: var(--color-blue);
-                height: 440px;
-                position: relative;
-            }
-
-            body > header h1 {
-                position: absolute;
-                color: #fff;
-                font-size: 72px;
-                font-weight: 200;
-                width: 490px;
-                top: 160px;
-                left: calc(50% - 50px);
-            }
-
-            #logo {
-                height: 142px;
-                width: 220px;
-                position: absolute;
-                top: 180px;
-                left: calc(50% - 340px);
-            }
-
-            body > section.intro {
-                background-color: var(--color-pink);
-                color: #000;
-                padding-top: 60px;
-                padding-bottom: 1px;
-            }
-
-            body > section.intro p {
-                width: 682px;
-                margin-left: auto;
-                margin-right: auto;
-                font-size: 1.2em;
-                margin-bottom: 30px;
-            }
-
-            body > section.intro p.signature {
-                text-align: right;
-            }
-
-            nav {
-                background-color: var(--color-light-blue);
-                width: 100%;
-                height: 30px;
-                line-height: 30px;
-                margin-bottom: 40px;
-                padding: 20px 0;
-                border-top: 9px black solid;
-                border-bottom: 2px black solid;
-            }
-            nav ul {
-                list-style-type: none;
-                width: 685px;
-                margin: 0;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            nav ul li {
-                display: inline-block;
-                background-color: #fff;
-                height: 25px;
-                width: 25px;
-                border-radius: 12px;
-                line-height: 25px;
-                text-align: center;
-                margin: 0;
-                padding: 0;
-            }
-
-            nav ul li + li {
-                margin-left: 6px !important;
-            }
-
-            .video-section {
-                width: 650px;
-                padding: 20px;
-                position: relative;
-                min-height: 100px;
-                background-color: var(--color-light-gray);
-                margin-bottom: 40px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .video-section header {
-                margin-left: 140px;
-                font-weight: bold;
-                font-size: 23px;
-            }
-
-            .video-section .description {
-                margin-left: 140px;
-            }
-
-            .video-section .video-link {
-                position: absolute;
-                left: 20px;
-                top: 24px;
-            }
-
-            .video-section .time {
-                position: absolute;
-                top: 115px;
-                left: 20px;
-                width: 120px;
-                text-align: center;
-            }
-
-            .video-section .assets {
-                margin-left: 140px;
-                text-align: right;
-            }
-
-            .video-section p {
-                margin: 15px 0;
-            }
-
-            body > footer {
-                background: black;
-                color: white;
-                display: flex;
-                padding: 20px;
-            }
-            footer a:link {
-                color: #fff;
-            }
-
-            #author {
-                flex: 1 0 auto;
-                text-align: center;
-            }
-
-            #licence {
-                flex: 0 1 auto;
-                text-align: center;
-            }
-
-            #jayway {
-                flex: 0 1 auto;
-                text-align: right;
-            }
-            #jayway img {
-                border: 1px #fff solid;
-            }
-        </style>
-    </head>
-    <body>
-        <header>
-            <div id="logo">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    xmlns:serif="http://www.serif.com/"
-                    width="100%"
-                    height="100%"
-                    viewBox="0 0 105 65"
-                    version="1.1"
-                    xml:space="preserve"
-                    style="
-                        fill-rule: evenodd;
-                        clip-rule: evenodd;
-                        stroke-linejoin: round;
-                        stroke-miterlimit: 2;
-                    "
-                >
-                    <path
-                        d="M64.409,37.484l-26.925,0l0,26.989l-10.5,0l0,-26.989l-26.984,0l0,-10.5l26.984,0l0,-26.984l10.5,0l0,26.984l21.803,0l5.122,10.5Zm8.694,-37.484l-12.384,0l31.444,64.473l12.383,0l-31.443,-64.473Z"
-                        style="fill: #ffffff; fill-rule: nonzero"
-                    />
-                </svg>
-            </div>
-            <h1
-                >Hyperapp <br />
-                code-along</h1
-            >
-        </header>
-        <section class="intro">
-            <p>
-                <a href="https://github.com/jorgebucaran/hyperapp">Hyperapp</a>
-                is an incredibly
-                <a href="https://unpkg.com/hyperapp@2.0.8/hyperapp.js">tiny</a>
-                and
-                <a
-                    href="https://medium.com/javascript-in-plain-english/javascript-frameworks-performance-comparison-2020-cd881ac21fce"
-                    >fast</a
-                >
-                framework for web-front-ends. It is also incredibly simple. The
-                concepts are few and easy to grasp – but it may be unclear how
-                to go from there to real world applications.
-            </p>
-            <p>
-                So I put together this series of short videos that take you
-                keystroke by keystroke from "Hello World" to fully-fledged
-                <a href="https://todomvc.com">TodoMVC</a> – with some thoughts
-                on dev setup and code structure along the way.
-            </p>
-            <p>
-                Watch the videos on double-speed, skip around and pick up ideas.
-                Or watch them carefully in order, copying me exactly. – However
-                you prefer, as long as you're having fun!
-            </p>
-            <p class="signature">/ Zach</p>
-        </section>
-        <nav>
-            <ul>
-                <li><a href="#n1">1</a></li>
-                <li><a href="#n2">2</a></li>
-                <li><a href="#n3">3</a></li>
-                <li><a href="#n4">4</a></li>
-                <li><a href="#n5">5</a></li>
-                <li><a href="#n6">6</a></li>
-                <li><a href="#n7">7</a></li>
-                <li><a href="#n8">8</a></li>
-                <li><a href="#n9">9</a></li>
-                <li><a href="#n10">10</a></li>
-                <li><a href="#n11">11</a></li>
-                <li><a href="#n12">12</a></li>
-                <li><a href="#n13">13</a></li>
-                <li><a href="#n14">14</a></li>
-                <li><a href="#n15">15</a></li>
-                <li><a href="#n16">16</a></li>
-                <li><a href="#n17">17</a></li>
-                <li><a href="#n18">18</a></li>
-                <li><a href="#n19">19</a></li>
-                <li><a href="#n20">20</a></li>
-            </ul>
-        </nav>
-        <section id="n1" class="video-section">
-            <a name="n1" />
-
-            <header>1. Hello World</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=sY8JTG581aA&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/sY8JTG581aA/1.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">4:08</div>
-
-            <div class="description">
-                <p>
-                    We implement the "Hello World" of Hyperapp. In doing so we
-                    look at Hyperapp's <code>h</code> and
-                    <code>text</code> function which define a
-                    <em>virtual-dom</em> structure – and how Hyperapp
-                    <em>renders</em> this to the actual DOM.
-                </p>
-            </div>
-
-            <div class="assets">
-                <a
-                    target="_blank"
-                    href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcA+AHTQAJeAEjABOMXhDi8sAT0HS2IjGza8AJjCy1EPFgHpOOlRFUBeLiCVtz3Pr3z3eAFUJjLvAO7QovAOa1eLqJ29jr6HJQgcDCw1MQQ9AiIIACsiAAsIAC+FOjYuEn4AFYIVHQMTMR4EFhstMLEvMCEFLyMAB7ELZaZvGDCtFi8AOQkxGxwiLq6AK5obADWPvh0WLqE8orKQzw8lgAUwDz8EGgQxIiN2Ue8AG4QMO4XewCUvCYcAXtDWBgnQy3AbK8ZDXfiEL6EACM-0a1CgGDgE2GPlEMDiaB8QyB7WIXyEUCg-gA6nUoKohs9nhRrgBdKnXNC0dQXVS0ajTHAMfA+NEAUVgnOIACFpABJVRfSwUniZZ48CIrNjQERINDTAlUKIxOIJPAATkQAAYsjkQJgcHhloiFfRGMwklkaZkgA"
-                >
-                    Result on flems.io
-                </a>
-            </div>
-        </section>
-
-        <section id="n2" class="video-section">
-            <a name="n2" />
-
-            <header>2. Handling Events</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=7VAwzbY382k&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/7VAwzbY382k/1.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">6:39</div>
-
-            <div class="description">
-                <p>
-                    We see how Hyperapp binds event handlers to
-                    <em>dispatch</em> <em>actions</em>, which update the
-                    <em>state</em>. This causes Hyperapp to recalculate the
-                    <em>view</em>
-                    and patch the DOM.
-                </p>
-            </div>
-
-            <div class="assets">
-                <a
-                    target="_blank"
-                    href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcA+AHTQAJeAEjABOMXhDi8sAT0HS2IjGza8AJjCy1EPFgHpOOlRFUBeLiCVtz3Pr3z3eAFUJjLvAO7QovAOa1eLqJ29jr6HJQgcDCw1MQQ9AiIIACsiAAsIAC+FOjYuEn4AFYIVHQMTMR4EFhstMLEvMCEFLyMAB7ELZaZvGDCtFi8AOQkxGxwiLq6AK5obADWPvh0WLqE8orKQzw8ZXANAMJQENTzAhhoqrDCvCa8ABT7GIwAlLccD8D2+E+MLdTHU4TXi-GDLQHzSQAal4AEZMi9dgkGgBJObTYjnS7XW4PUEtGAANwqbxMH3uX3s+N4mBwiF4RIq+GIGGEPhgxHwhIwUGmMARO0wygpPH4EDQEGI9OAtJg9KGAClaIQ+AARWgwIb-CHAgAM2VFvEJEBg7npjxZr3eAXuQywGHFWsa2V4yEN-EItsIsKdwABGDgwKGPlEHPFPiGLvaxFtQigUFoLSGvBhoPwspeLwo7ptIwATL6ozAOrajidIfKUyDLWCAeW4Jns7YPbaAEYY4j0X30Ounell05Yq4iIsloYD+ZSTWNnOeoZsQstN3N-itYsxoYABVgAbEFREvGktGmN1lQyzOZbQ3FbAxvsvq+IG3l0a1D-43N5curzzBsqbq6Abw9A3hi9JoremIXMOwgPgKK4ALqIrYSEATStDqPSqi0NQ0w4Aw+DssQACisD4cQABC0goqotqWOePDwREKxsNAIhIGg0zxlQUQxHECR4LCiC6lkOQgLKeDLIGzH0IwzBJFkCGZEAA"
-                >
-                    Result on flems.io
-                </a>
-            </div>
-        </section>
-
-        <section id="n3" class="video-section">
-            <a name="n3" />
-
-            <header>3. JSX, hyperlit & @hyperapp/html</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=t6V2HexMdUE&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/t6V2HexMdUE/1.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">8:45</div>
-
-            <div class="description">
-                <p>
-                    We take a look at a few systems for authoring views, which
-                    can give you a better developer experience for the price of
-                    some small amount of complexity/performance.
-                </p>
-                <p>
-                    Going forward, <code>@hyperapp/html</code> is the system I
-                    will be using in these videos.
-                </p>
-            </div>
-
-            <div class="assets">
-                <a
-                    target="_blank"
-                    href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcA+AHTQAJeAEjABOMXhDi8sAT0HS2IjGza8AJjCy1EPFgHpOOlRFUBeLiCVtz3Pr3z3eAFUJjLvAO7QovAOa1eLqJ29jr6HJQgcDCw1MQQ9AiIIACsiAAsIAC+FOjYuEn4AFYIVHQMTMR4EFhstMLEvMCWmbxgwrRYvADkJMRscIi6ugCuaGwA1j74dFi6hPKKyl081bX1Aa3tnT3EfQNDoxNTM3MLwpYAtMUAHhds5z5YGAD8mqrDsMtoQwACNwE8HhlOANADCUAg1HGAgwaFUsGEvBMvAAFCCMIwAJRIjio4D2fDoxgUXjUCFQga8Ikwabk8aSADUvAAjJlMUCEg0AJJjYbEGFwhFI1HUkkwABuFWxJlxKPx9lFvEwOEQvAlFXwxAwwh8MGI+HFGCgwxgbMBmGUcp4-AgaAgxFVwGVMFVXQAUrRCHwACK0GBdElkyH01UABmy1t44ogMHcqrRWqxONRkf4LCetps-GzvBYhGZpKgGDgcDMIB8oj1tp81iEUCgtBJwGp+GdmT0+azOdzhAATBxwcHKc3EzSgxT23N+6nsywAEZ84j0Xj0cfjEzAQdQgXwkSZAd0qQwPQL3b0Ls59gX7sABVgxbEFREvGktGGiOdM8vtrYfN4xAWMtGGuYhzCjI0TQ3Fs2xXO1eWIDceV-flYV3YQWl0a80zCGc9AzNAu0xChIzQWh1FVVRaGoYYcAYfBdWIABRWBaOIAAhaQuVUFEuksLp2TQNkIhmNhoBEPA5wwOdogiKIYjiBI8GZAB2RBmVDLIchAZ08GmEthPoRhmCSLIAF1MiAA"
-                >
-                    JSX on flems.io </a
-                >,
-                <a
-                    target="_blank"
-                    href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcA+AHTQAJeAEjABOMXhDi8sAT0HS2IjGza8AJjCy1EPFgHpOOlRFUBeLiCVtz3Pr3z3eAFUJjLvAO7QovAOa1eLqJ29jr6HJQgcDCw1MQQ9AiIIACsiAAsIAC+FOjYuEn4AFYIVHQMTMR4EFhstMLEvMCWmbxgwrRYvADkJMRscIi6ugCuaGwA1j74dFi6hPKKyl081bX1AaTebR3dvf2DI2OT0x1zC8JQEMQA-Jqqw7DLaDxlcA0AwpfU4wIYaKqwYS8Ey8AAUbwwjAAlMCOGDgPZ8BDGBReNQvuMBrxkTBphjJABqXgARkyUJeCQaAEkxsNiL9-oDgWCcaiYAA3Cowkxw0EI+ys3iYHCIXgcir4YgYYQ+GDEfDsjBQYYwMk8HiWPk8fgQNBXUXAYUwUVdABStEIfAAIrQYF1UeiIN8sQAGbLa3jsiAwdyi8FS6GwjZkAAGHv4LCwGF1Nn4cd4LEIxLRUAwcDgZhAPlEct1PmsQigUFoqIAJMAcfgjZk9EnY-GE4QAEwcT5OzGi8tdbq8ImVx3OmtzFvhuMsABGdOI9F49AH4xM5bb3wZAJEmVbGKkMD0k+I07Q9fj7CPDYACrA02IKiJeNJaMMgUbR8fdWw6bxiAtM4wAB7EcxPSVFVFwrANcWrWc9VpYhQJpd96T+NdhBaXRTwjMJRz0KMYxDCgPTQWh1FFVRaGoYYcAYfBZWIABRWBKOIAAhaQqVUUEuksLpyTQMkIhmNhoBEJA0AeKAqCiGI4gSPBiVSZIMmyXIcDwaZ034+hGGYJIsgAXUyIA"
-                    >hyperlit on flems.io</a
-                >,
-                <a
-                    target="_blank"
-                    href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcA+AHTQAJeAEjABOMXhDi8sAT0HS2IjGza8AJjCy1EPFgHpOOlRFUBeLiCVtz3Pr3z3eAFUJjLvAO7QovAOa1eLqJ29jr6HJQgcDCw1MQQ9AiIIACsiAAsIAC+FOjYuEn4AFYIVHQMTMR4EFhstMLEvMCWmbxgwrRYvADkJMRscIi6ugCuaGwA1j74dFi6hPKKyl081bX1jVgYEGgUvIwAHsS7hACMxwBMuwBGw8TE9Ltsu9tsty1tHd29-YMjY5PTDq6AAC8wUwksc1IUAA-JpVMNYMs0DwynAGgBhKAQajjAQYNCqWDCXgmXgACnRGEYAEpSRwKcB7PgqYxdtRsbiBrxWTBppzxpIANS8E6ZGmohINACSY1u+MJxNJFN5uxgADcKnSTAzyUz7KreJgcIheBqKvhiBhhD4YMR8OqMFBhjBxTweJY9Tx+NsIMRTcBjTBTV0AFK0Qh8AAitBgXXZAu5AAZst7eOqIDB3KbKVbafSpFs0OTkGn+Kc9RyMHBuV0fKI7dsfF1snsYIdyV0hFAoLRdl1eCLefggzSaRQywFzuSDsRO1icYKQ4OeXm+RzF3AxxPbPwbnd6Hr6BvcaaF7iFUSRK3Z-OBVI49vJ2wS5P+LeugAFWDVsQVES8NItDDCSQZdOOb7iHKc7AJB74LCGs7xnB6ZOi6prDkGO78DhOH0C8tymrKrzEJexLYbhvBuruvAALoSrY9EUWgtDqKaqi0NQww4Aw+C2sQACisA8cQABC0jSqonaWOBPDUREMxsNAIhIGgiJQFQUQxHECR4OcADMiBJlkOQgEGeDTDWCn0IwzBJFktGZEAA"
-                    >@hyperapp/html on flems.io</a
-                >
-            </div>
-        </section>
-
-        <section id="n4" class="video-section">
-            <a name="n4" />
-
-            <header>4. Making a list</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=SH2uSjm83W4&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/SH2uSjm83W4/1.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">5:39</div>
-
-            <div class="description">
-                <p>
-                    We begin our journey toward the TodoMVC implementation with
-                    the first step of making a list, using just the knowledge
-                    gained in the previous videos.
-                </p>
-            </div>
-
-            <div class="assets">
-                <a
-                    target="_blank"
-                    href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcACCAEwF4AdEBjZtBHAPQA+SiDgxY1YhHoJEIAAyIAjABYQAXwrpsuNfgBWCKnQZNieCFja0ATsQ7BhbfRzAvaWBwA5CTEbHCI4uIArmhsANYA5vh0WOKEAJ5sMC5eQfxojs5uHlgYEGgUHIwAHsRVFWzR9RwARs3E9FXRUFVQED5+AcGh4ZExcUkpAeIAApnZuSLppFAA-Fi03D0w+WgFNnDuAJJxzQByMADux4yBvBwAFEcYjFUwAG52AJQcvJJPYAFDgcfBgl5vYEcNDXCB3RAcT52fDEDAuRIwYj4D4YKDRGAFfTfAoHFTuACC3G4txg9yeEJgv3+HAAhAz8DCrnDaRw1hwGRwEUC0CCwfgGRQodysBEOMh2ZzpVUxezpXAALqSkXQ2Hw6E9XqEkmYESPYUgipwoWKvVoA0NO6y5DqwxQj4Qa4I56oxhMgFlCqPZBQi1nYhmkMg6pZGAIoK1YhBLVRqM4vGx-k+mAc3W05Mpjj0RrNBGnJrES43O75lNsKAYagwQi0KDcHJxgDqhFeHG4tA4GVo0R1MG41X7fbWexTRJrbQ69DN9Go-Wo8QRlOpd0M1RgdUeQQA1EFvt85z1va9s2r8GU2I9pQAVPfuZn9R4Jh93Z91U+nqHqmeUJoFsGZ9tQ0Q4Aw+AYsQACisBQcQABCGTHNwB55MSaBEgUMipGw0A5EgdpQL0sjyDAijKGgqggFoiA6AAnAYRggJgOB4CkcBWDQ9CMMwagGC6QA"
-                >
-                    Result on flems.io
-                </a>
-            </div>
-        </section>
-
-        <section id="n5" class="video-section">
-            <a name="n5" />
-
-            <header>5. Crossing things off</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=AefLjTstbgk&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/AefLjTstbgk/3.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">6:50</div>
-
-            <div class="description">
-                <p>
-                    We add the feature of being able to mark todo items as done.
-                    We learn about actions with <em>custom payloads</em>. We
-                    also introduce some CSS to make our app look a little
-                    fancier.
-                </p>
-                <p>
-                    We also learn how hyperapp handles the
-                    <code>class</code> prop in a convenient way, allowing you to
-                    specify classes using objects
-                </p>
-            </div>
-
-            <div class="assets">
-                <a
-                    target="_blank"
-                    href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcACCAEwF4AdEBjZtBHAPQA+SiDgxY1YhHoJEIAAyIAjABYQAXwrpsuNfgBWCKnQZNieCFja0ATsQ7BhbfRzAvaWBwA5CTEbHCI4uIArmhsANYA5vh0WOKEAJ5sMC5eQfxojs5uHlgYEGgUHIwAHsRVFWzR9RwARs3E9FXRUFVQEFVwbBiVHIQwGNw5gzCKyqOEWj5+AcGh4ZExcUkpAeIAApnZuSLppFAA-Fi03D0w+WgFNnDuAJJxzQByMADur4yBXgcAAULwwjCqMAAbnYAJQcXiSEHAAocDj4DFgiGojhoX4QAGIDjQuz4YgYFyJGDEfBQjBQaIwAr6WEFJ4qdwAQW43H+MEBIKxMHhiI4AEIhfg8T8CfyOBcOEKOESUWg0Rj8EKKDjZVgIhxkJLpbqqhrJbq4ABdbVqjjcegwInIMD0uSmzHkxj4e1460442E3E9XrMtloZ7uAAqtESiVgABEHQjBZ6YA00FMaiKkaq0bB3D6YMnkGbU96HZacYXkBVM5bk2Lq7WYDVK7aXNToi41cBS+C03aHfpQ49MCJgbmuIViCqA-yiWhgw0AfrkNbB3inZbDDioRBfkTQansxwyhVgcgcWjxpMcsDFsDasRgUFo-aOJyREFYT+bWi0WeaAXle-5yHM9ATtQUAYHA+pBHOOAMC4GRBIYBogf+U5NM+k6YZhxBZI6wRPkEf54ZhdIMkRRr4gCZHkWi9CNM0RLvNh3x-HRGF4Ww0HUDAhC0FAUwuESQQAOqEOCg4cBktDRLiMAwNw1S0IOFwPAxHAsvReHtMQnRAcA9BQRA1DxES3K8gCaFPi+ADU36wrpaKWs53FgUoEHAFBMFwbq-QvKhVSXra5E9Ee-b4Ba+BlGwwLArqkYti0zZZgiSL9MBYUMcxOHceRBHZGJ1DjOZrS0DUpEFXhpWzPEylEpKTYZi2fo5VpTEfDOBrRrGCYOumdYuXhOk1WiQwjJB0GwSqhZNWWLV1votkpYlALJXUP41W520dRwbkgYdtpuWRaA3ER9rUNEiE0lSxAAKKwLdABCGSvNwL55KyaAsgUMipGw0A5HgrQYK08gyHICheWgqggAAHIgACsABMBhGCAmA4HgKSwQD9CMMwaiIP4tDuJOAC0lN0FAriU9wFLxJTiS5BkRKUq0wI6KjVQ83zqOwgA3Di1O0-TjMuA1Lgs2zHOJFzWgAJxVMrqtK8Los00J9Osxg7McAAxAjJsi7aYs6zLrR8RZRvqPbZtohbdMyz8hCykShtgN7jscM7usdkw8tc0rCOqwA7OHVThxrvv+1bVFEnQ3ZgHTPw5NbjJx9rLuUxk8hp8HwLKzoqvI8jVQAGzI5r5s5-THbcEXWgAMylxwLe8xw4e107lNg+ZrPyRmlOaBwdIuMC8cM0zOSy-rvd+-3GCD-4sTcJTWhEhPU-1wnK-xIv1MD0ka8j6j28Urv4sy5LzN6xktfDqO+xFK47hdlAwKCOsERRGAhM4D4ESLQGMsBhAQCAakcQ1BYKowuC6LA0AMi8E+LEAktBEAEnpBQH4iQSD7HUBQVGDsiE6FIRQBGDstDEOoRQch6ghY0KoeoAAZNwSBvF9a8DgD8YQgha4FAAFQeBxGUSkFQiSMJxMMHkFREhSLNs-AoJAyA2gqtwDIojbTODgASeYHN5DgggDCX2MpuDEEIESLQ9sACkvtxgQHwT1Gx6h7E4hPkPdee9L6T2PgfLxI91CLwAQwSmiDkFEjQdOWggwRhwEpnIFwEAwC+xvr46+ltKZu1lCEwmiSIAAC8iKo1RmwGoSiwwaK0UiQC2i0S6P0fQQx0ElCmJxOYyxRJK723KQ4mATiSDWLsb7WAYAerUHpNQYEyM3F+w7r0rMlTRzVI4LU8oaokQ3hEmMLQ9TfD5PToMnqJDpG2lCcQApxSiTkL6TifoeJKaOOcdYkhdzbRPkpvSJxaAk52ByMsgoqz1kVDWaeDZ+zGmwyJODOAQlmgwF9p0Ngrz1DvLRBVAyAQiRvIqfcmA4zFE4mSS8jgZyMWuBEpTXIHDoj6mRuitolKcjWPKePK+08cmMHhHC-o3BfaeLPhvdJ7K-HL1XsPDeWhF60BhC4VOtAfhEndjyJggK0DAvBaCkFmyDnkxyJC2gejoUcFhfCxg-TjlEnDmivFtpMWdCwES20Yyerko4J0qxHBXHuPtQEoVPjRW70FZKymgsBXMplsi1lNQ7QwXGCpHenL3bcvVXlZARUYACBAE+QQ9ZJxyqUJMqAXz+iJF+apNgvsLlXJKWUu1eYKgwCeQM0lLdw6MtkRwtACiyVspsf2-ttrq35IiVAA20SMFxLhoknIKSI0uBEguB0Ar-WhpFUm8Vp9Q3SoXUu71bLN0hu8dKxUQkeBpMtp7b2qSRwFHTZm7NuaQCWkQAA66cB9nyWIA8oi508R7rnsiwNm6b7ZJTcKQDVtyaOpAxyve4HcnLIfYRJ9KU82IEQFw-iglhIGsnDWl4GRYBEmwf0agl6XYZOng-J+VSOhdHvd1DNqHBB1XKpVPN+yvATFyOGP9K7Rbp1aPEAkXyRC8ZGPxZdAGqycOggbCov7+503MmYngXSOC3IbWMVtQytPDpxBu+DYGuWQY8Wu7xxmxVgdo1BmNQb-ESpPTy89-KPGRupZMCAdKiQMp058755a-m2BcCOsJejrkcFRgjRl10XBwtEhwZwFRGBhd3DkIt9JS0-KJMi0ZTaW1Wo7rFu1yiNUMZ7Pcwrzz9PafVfpQyb7aAfptCh7I2b2PxAqjUDD766VfuaL+mTiK70Vaxb8lebSiyTgqouoDtA2DZI016+tUH+4wYCMtixXrDO2lqz1FuSt3nlfa1mtjZVuucZffsz5zYGAxtXc5ke1nMm50zsKcUb83AjGIMh5jj6Lv1R6xhxAGBxn4aM4TOwRJBD8H4KjSuNjBD-ewixjrQOOO9ZfYgLryl9nHpe1exzCHaNfacO-X7aaAesZoJdkHOO8dNzBxDlw+ybBEx6nDhHSOtAo7G1KWi-I7DIQJ5ZonVGSeE43uGjz82o2Lcpq6rztL9Q6EZXNqlwGSUkBVz5tXnbJjdt7bi9VguZQAhF1os7aG6hccnJ6pOUzi52PmTY+tdHRzm91FbrCzR0fnZzehm79k2iVbF894VxPQNZNZkpNAi9NcLaW8rml+upEa88w6rbqfvO+b7WVsM3vLdIWtzTjHdPgfXfzXLrXiudeXLT-n91SfoNYqwNS45evm9m4CpAimMijVNIrWahkFqcTRo4FQzP7frX+dGQSt16mdvDLcb7WVOQFU-EpjUZVPAphoHX3KrfecmrUH8FAKAveASBQ-lAfZt-EkEVgJTTNI3fZdvkdY+fAu+8vA4P0BHtulZtHvBtLmGovOIokBUBtrPhwJXIbnIj2n5oygdjcntuVtFDfv3gARAIqMMFVraBwkMApqRmgMptbC1vEL7FATAa6t-qgXpj1PVtVo8mgQZoyo7hwMWtMj6vMkrP5jKsfoXGMPvmqh0hBoksMNJriIqicEiilJTBvvKiIQXBAOEJAsslgfyLfrgfgSMOWHiOzqATZrHmzIvJ8lMMnMYs0rgY8pYmvPgloX-u4IAY1s0jNJcqVNACpLNuLlHpLjHrnI3IvK9smkhruJAhAK0NAASAbCqgfs4dgf-oATboIM+jXraLQWgErovjcurjplwTwS7nMpTN6osp7gUNoWQDgf0IgIJHKmHhNogJ4TTO7MJDaNUboW4ZVi0TBF4e0U3A0ZDraHuHojEf0ARNvFEdbKNr9GGD0PgJAFAGlp+pOI-kRi-m-rIbJjokPiaqPgigvoStwc7rMrYm7qjIIUiotq8idgUIscsasXoZOMQVwopuQU2sso8dAM8YAaHoAZONkbkScQgYXouFAEsb8TkJ+hgPsm8aQVOBQaptQTiOwSwTokbl-gXt6mtqwc2uiXtmiGEQhmZnkhFkUkRFoKVgoXUAzLMK4DYRWv+nMeVj8SsTCaaikF2B2AwATpGg5kev4ZvK5nyuTsUOSAwE9sARLq4NRghvnJfoqonp5k3vSogcbhnrGloFoPcaOOyc8RgPUcofyfLoKSZmYQvGenyutmqSgTpp-sgTiTqXqQUAAvqmzu4YQQ0vsQYqaq0LykccSsVgOgFrcd6j-ucvkpFlSQUcvpproESW0MKSSWBiEequ6Wlsloasan6YcePi6nkdFkmZPloJGdeEwegYyspoSYyoRpSdYnGSOFDPILMLDPDIjjoIgOoAYNuEAA"
-                >
-                    Result on flems.io
-                </a>
-            </div>
-        </section>
-
-        <section id="n6" class="video-section">
-            <a name="n6" />
-
-            <header>6. Add with Enter key</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=qLJiu5c5ybw&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/qLJiu5c5ybw/3.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">6:59</div>
-
-            <div class="description">
-                <p>
-                    As we enable adding items using the enter key, we learn that
-                    actions can return other actions, and we learn about
-                    creating
-                    <em>action "guards"</em> or <em>"decorators"</em> (the
-                    nomenclature is as yet unsettled)
-                </p>
-            </div>
-
-            <div class="assets">
-                <a
-                    target="_blank"
-                    href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcACCAEwF4AdEBjZtBHAPQA+SiDgxY1YhHoJEIAAyIAjABYQAXwrpsuNfgBWCKnQZNieCFja0ATsQ7BhbfRzAvaWBwA5CTEbHCI4uIArmhsANYA5vh0WOKEAJ5sMC5eQfxojs5uHlgYEGgUHIwAHsRVFWzR9RwARs3E9FXRUFVQEFVwbBiVHIQwGNw5gzCKyqOEWj5+AcGh4ZExcUkpAeIAApnZuSLppFAA-Fi03D0w+WgFNnDuAO4QxIQAorYuANIwDIcXgcAAUGDm9AAlMDJGCXhhGFVhhkoLRJjDeHDgAUOFwwGCUWjJvh4oCOAAyCkcIno7ik8m8JnBH6MFxBGEuGDEaIuNAcZAQpRdGkYVF0gC6uI4XJ5fI4CMYBX0BSeKjeH0IABUMC5EtyAGoYKDRGDAsFC+aYuGgxUwZFi4nca0eaUQAmg2kk4i6-XuKmi8Xe33c-AAN2Nps53N5-MFkNGXvpPr1oYjJpgUv5Mpj8rtytVaGe7gAknFmgA5GCvEuMQIg20+pFccvEF2gnHZ-Ddu0UaVoasfGBYRAtprEZVQwvFjgAQW43Frw-NjcRMBdAEI7fgB+86xwLgqm2bR528d38L23XWIgLt7uh1gqhft4+4BK+9nuPQYKPkGBjTkZ8e2PfBvwHD9+0HOtRzQHpegLR4i3VDgtVoRJElgAARH8V17FsphqF0zw4WB3HAs0QWQF9QIorM8Qo5AKkIiVzQ3RjmJgGp6JzOV+WAGi1yqCiVTQUSCi8Ds3UKYhTwfGCODgqBei4G8-w-DgKPUwxpTDCBq1HVdGBdMoKlBZBpTxcZJhyUFFlBWpiFBII0O-OcRA5KEoU-PE8VMtBzMs3y5ATDtqCgDA4FvIJ5OHOwXAyIJDAFILfLHZopOzNK0uILJf2CRygh87K0vTU1R3vaDh2Kkq8XoRpmlHPdtRDYgjQzUEy3HKsazrbzUuytgIuoGBCFoKAphcUcggAdUIRFNNoDgMloaJFJgGBuGqJbvwuIqBrS+gySyLkoqazVWRyAEMlBedFz6mrsv0fqsuy9piE6ALgHocKIGoeJRzupcsGSxznIAak8x68QlF6SpC4UvvCyLosffoXiSqoLNetKeiMmB8DffAyjYUFQUfLUuJaTiiNhUiIECnHsoapySNq3zcuyabqHGf7WloGp9qZkqedmMluAq2ifyYtAWOh2r6tbP80Iw7CfwaWWuMg4XfOe+W0qGEYwois6PC0o81zA6WaYlfRQap8m60puovIOjhYddpnYaC73s1h4q0BufLv2oaIcAYfA-S+WBw+IAAhDIS24Zy8inMS05kVI2GgHIkCU3pZHkWZEdUEAACYAGZtAMIwQEwHA8BSKLM-oRhmDURB-FodwSIAWl7ug0RcXvuF1eJe8SXIMlHPVWlBHQy6qBel7LqEAG5pX7wfXBHsecgnqeZ8SOetAATiqM+L9P9fN4H8ad8nsVRwAYgADnfjfsy3+-h9aYaAY4M-dQwDP54m-kPXurxCBDhfmAOBoCODgIflyJgR856n1fhfAA7FgqoWDr4IKQb-DMo46B8jAGiV4OQ-6mkIXfCBGR5CULQaCM+OgL4AFYOFVAAGwcJvl-ehO8uQSxlMfVhFd2EcArovDgWCBFgN7q0CESR-CxG4L3TQHAIwuFBEQ3eLgyTD0fhkBRiClEqMnqtWWvctCjh0XooRxCVFmP7so-6Vj1G9zLvY3Ujjt7D1HoYg+YoBHiTQPsIorh3C8igKCQQ6wIhRDAK3OAkdaDoVgMICAaTUjiGoFFMuFwAJYGgBkXgFZYgfFoIgD4xoKCvESCQfY6gKBlxAa0nQHSKCvxAVoNpfSKBdPUGvfpvT1AUm4DkoaYpeBwFeMIQQAiCgACpXTZjKHqCoo4RnSmGAuCoiQdmf3CSQMgn5+bcCBCRZwcAPjzBnvIREEAwwwAQe8bgnxRxaGAQAUgQeMCATTZIcB+eof50p3GqOsRogJvjdFuMsWomx6gzEpIYL3EpZTRyVJkrQQYIw4C9zkC4d0CC4XaL8foqBQ40Wt2JRAAAXvlMuZc2A1BOYWS5QI4T+XWXiW59z6CPIikoV57yeBfI4Dw4B7KAUwCBSQb5fyEGwDACC6gxpqCgg4eCxB0jZVEU5UhblHBeXlH5HCayk0xhaH5b4elVDFUgvabs7M6LiAMuZaOLpcrpT9AHL3QFwLvntL9dmRyvdjRArQKQuwORjUFFNeaioZqOB8pubQO5iNRwYFaHAcazQ3nSk6GwUN6hw14n5h9AIo4w0cv9TAdVxzpSkpDRwN1VbXCTV7rkKZ0RbwcMrW0btORvnsspQipxkDoHGQVONHgCCoWeJsRShxiKPHIo0VoMxtBXkuAobQV4o5oELiYImtAyb00WrTXyuEKTu45HtYKnNHA80FpNIweVzrRxYIrQ27M1bOgjg7aqptILO0cA+VKsFELANIphU4+Fjjl1bu8WY-mLge2lvHTUTSkVxhbXXdOmlxkL0s2QJzGAAgQCOUEKxEi+6lCaqgFG-oiRY3bTYAgj1XqWVsoA3iANMAg0KvbRXLBw79lTLQEcjtE6fkKYU-+nj9KsVQGnhwXF1SCVoCJSSslkLR1TUUj+JdCGvFrqpRYzdiGd1LuM7hydKGLM2J3fO-o3ByU-1gfAxCBQKNUZo3RkAEpEApNDnAe1q1iDCdgmZozWH96lqQ856ls71wOaS7-buwHUvEYCTO2lxrAt5WC1TejiBEAzJGmNCaT6SK8ZeKifKdT+jUG80PZD+iTFhK5R0LoAXWyUbK4IUWfMBb0ftV4CYuQiz5UDgOQhVDWjxA+FGkQs2RgjXi0t6UUyhgRU0xUYTSi0T-QlZ8wgPqVPSmDUqjgvrBMcCs1OwrpHMuQtc7CnzaXp29ay5NJzxHUN2ZhB+xdiWe19ogAO0cQ7nuRujRxuNvxVMYrud6jgZdX7DtDi4AtJnnAVDZAgpjf1jRsZjaOUtqqKgifuyCiuuOAPhPep9e1p3Gc3fDWzgbsaIsDs-KV7INHxvxH5jUSrguoskRi3F0ze2xL9ZrbGy0rz7WYew7QNgkDJXXex8OrX+8gMBD11dnZw7ufSNPrzwsIvqNjd5hLyboX7WRs4gwXD5nbOWd+wVn+Z2owcA3FEtwIxiAleG0Fp3YtJeVcQBgdVDXpQ2DbiCwQ-B+Blx4T8wQUfxwjdF7HibUvQuIHF5tTX338vWcK71kPYefQMHI9H0bNBnfx-L5XiWifk8uHtWnuwo5M-Z9z1ofP-m0A7iqrHBK1fferv99Z0HXjV6A+Szr3uarPUw7h49o3xne4pbbSQXtkxYe3h0FJyYMm5P1ovTPvccUGDz4d+VuoU2SLQYNyx7VsH9UfkBM+skIn9Hx4ogR39BAQtWJwY2h+cF9oU-cus-t68UE0AMMj8Usd9z9+1bxbtAMj9TcsBt9wNcDL9LdWdCwwC6wID0piAi9HcO849XcGModN9ddT9d8L999INjccsa0SCuDyDeDH80Ycke49ks0hVON31C0v0S0ddRxelD9BDf0EcwNm1QNpQf9lVwUEE90chD1Xhe4agT0eApg0ADD91jDe5NM4BqB-BlIxC6x0YYkoBOcJDiVcpYBj88pdti1sxpNDlvkNCp9CZXCJD6ZECV0fsUCQca919pRNlEgKglFcta1pUb8DlZN4crcxMHsnsXDhw3DojDZ+J9tpkjtRwTt6cztaALtkjfQ0id9Qj8if1HsCChM6jrciidD9dSEtVWE-l9VT4Edd0bDmExgLDz0dCMtiVhgdtTNXgTgEFI1DCD0pimEIBwgcljUIiSioj+gFRhhp8KJB9l83tA8AcS0qYR5ZhXBnlhV6ZA1Pg1Eml9jxCXhoj2dhUTZPUeZoAtoSJV8l94i69A8REzFXt-FA8PszE9I7lWhoAPhNNT1LDPjIjvjjioDaMKs3cSIUiWjwMfVr9ntdCXshiADe5QVDUQCCgDiyAjiIBEAxp914DVdEB-iB5oEJpPxGTSjjjfjY1uTASJpWSNj7VESIBkT+hcp7EckZTYAL0eh8BIAoA2RZd-UvDmtfCqMAiEEX0Hk31815DAihMSTKSoBtVdVflACy5xi1ilDQUBNjVVT1TNToiSIDsZljs0BhM3SoA1ToBPTji4DjjCTmi0BSCtCeE7clJgyNScgosMB7UfTqiWxTs-4Gj4hv120+igjb8Qj5M8MtBXTtTA1eiuiXtLjYSIF4T0dPVMd8otAWc1i7ipgyEnjONFtAjwl3SQzky30UheQuQGBNdHNQUJ0EjF9t1wcF0tpQ8nBokI8fckCwTXButp1GFlIj1MDssRDB1si79KDQUtB4yCgBykyCc30JT2SQTJzzy8MA8IEG8IcvN2Dh498jzntgjciSyzyLy0AH02QOSOdM1s1jS5DP1zSZQOjFNEdnStAwj3V6VmzvkyTLsYMCyq0a8YT9EoSL0QKn1OAIKZDc1TSYLNCXVqycNQUUKrICiQUcKXiGcmKednsmsmUWzMLEIZA5AFAS48Ac8dBEB1ADBbYgA"
-                >
-                    Result on flems.io
-                </a>
-            </div>
-        </section>
-
-        <section id="n7" class="video-section">
-            <a name="n7" />
-
-            <header>7. Deleting items</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=ka-SBL7jsW4&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/ka-SBL7jsW4/3.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">2:20</div>
-
-            <div class="description">
-                <p>
-                    Just adding the feature for deleting items. No new concepts,
-                    but we emphasize the importance of
-                    <em>not mutating state</em> (a k a always work with copies).
-                </p>
-            </div>
-
-            <div class="assets">
-                <a
-                    target="_blank"
-                    href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcACCAEwF4AdEBjZtBHAPQA+SiDgxY1YhHoJEIAAyIAjABYQAXwrpsuNfgBWCKnQZNieCFja0ATsQ7BhbfRzAvaWBwA5CTEbHCI4uIArmhsANYA5vh0WOKEAJ5sMC5eQfxojs5uHlgYEGgUHIwAHsRVFWzR9RwARs3E9FXRUFVQEFVwbBiVHIQwGNw5gzCKyqOEWj5+AcGh4ZExcUkpAeIAApnZuSLppFAA-Fi03D0w+WgFNnDuAO4QxIQAorYuANIwDIcXgcAAUGDm9AAlMDJGCXhhGFVhhkoLRJjDeHDgAUOFwwGCUWjJvh4oCOAAyCkcIno7ik8m8JnBH6MFxBGEuGDEaIuNAcZAQpRdGkYVF0gC6uI4XJ5fI4CMYBX0BSeKjeH0IABUMC5EtyAGoYKDRGDAsFC+aYuGgxUwZFi4nca0eaUQAmg2kk4i6-XuKmi8Xe33c-AAN2Nps53N5-MFkNGXvpPr1oYjJpgUv5Mpj8rtytVaGe7gAknFmgA5GCvEuMQIg20+pFccvEF2gnHZ-Ddu0UaVoasfGBYRAtprEZVQwvFjgAQW43Frw-NjcRMBdAEI7fgB+86xwLgqm2bR528d38L23XWIgLt7uh1gqhft4+4BK+9nuPQYKPkGBjTkZ8e2PfBvwHD9+0HOtRzQHpegLR4i3VDgtVoRJElgAARH8V17FsphqF0zw4WB3HAs0QWQF9QIorM8Qo5AKkIiVzQ3RjmJgGp6JzOV+WAGi1yqCiVTQUS1TQF4OCw+RuUo+FjwaNBCOI6UyK4G9zWokC13wN8ePUiitMExgwJ-Hi30vNh+moGBQU4moqi0Kcvx-KybLshynJcvFZVjDwTPtDThzgYSf1E8TMBEDs3UKYhTwfGCODgqBemCrBb2QD8OAov8JUMaUwwgatR1XRgXTKCpQWQaU8XGSYclBRZQVqYhQSCNDvznEQOShKFPzxPFKrQarasGuQEw7agoAwOBbyCRLhzsFwMiCQwBTGwax2aGLsy2rbiCyX9glaoIBv2rb01NUd72g4dzouvF6EaZpRz3bUQ2II0M1BMtxyrGs636zb9usiEYEIWgoCmFxRyCAB1QhERy2gOAyWhomSmAYG4apUe-C4zpBrb6DJLIuTmt7NVZHIAQyUF50XIGHv2-Rgb2-b2mIToRuAehpogah4lHRmlywdbWvagBqXqWbxCV2YuibhV56bZvmx9+heNaqhqjmtp6MqYD0m98DKNhQXsustS4loHJdfpRv1-aXrakjHsGw7sjh6hxiF1paBqInnYu33ZjJbgbton8mOUrjIJD-bntbP80Iw7CfyUli5dZxWPYVYZVZmymPFyo9dI4uPuP0CXbat4cbbqPqc62rmeY7fmbOFgUZLIoKHPyqpJaCAANWXiY4BW+pBhWxtn7MFfOtAbmO79qGiHAGHwP0vlgTfiAAIQyEtuHavIXLZgoZFSNhoByJAUt6WRZITVQQAANgAJkQABWd+DCMCATAOA8ApDmtfegjBmBqEQP4Wg7gSIAFpEF0DRC4RB3BdTxEQYkXIGRRx6laKCHQn8qgkLIZ-KEABuaUyDUGuAwVgnIOC8EEMSEQrQABOJy3COBcOobQlBUMGG4LFKOAAxAADmkTQ7MdDhHoNaDNIWEj1BqNkXieRaDEGvEIEOCRYBDEaI4FokRXImBsKIZwyRTkADstiqi2M4QIuRQjtFKOuhwOgfIwBoleDkDxMBjGmPQRkeQfjLGgi4ToJyP8f5VHfj-Fxmi3EMK5JHGU7CokAGYYkcGyaQjgtjkkmMQa0CESR-CxG4IgzQHAIwuFBCExhLgyToNERkEpyDylC1wRjZSiCtCjgaU01JijlHxC6WUipfTqmIO-vU3Uoz6HoMwa0lhYoXGRX2EUVw7heRQFBIIdYEQohgEgXAbetB0KwGEBAS5qRxDUDmp-C4AEsDQAyLwCssQPi0EQB8Y0FBXiJBIPsdQFBP7qIhToaFFBJHqK0JCxFFBYXqCoUihF6gKTcHuWDL5cBXjCEEC4goAAqV02Yyh6gqKOdF0phgLgqIkOlsjIokDIJ+AO3AgQkWcHAD48wCHyERBAMMQTpTvG4J8UcWg1EAFJjHjAgKC+KfCFXGJ6ZU-pNSVnDKWd0mZVSBnqBKechgiD3mfNHD8uKtBBgjDgIguQLh3TGL1YsxpzTdFDjNZA51EAABex1P6fzYDUNlhZuVAjhMNSleJ+WCvoMKmaShxXGKlTKjg781HhqVTAFVJBZUarUjAMAarqDGmoKCH+6h5UmPybmoikakLRo4LG8o-I4T1RhmMLQ8bfD+v8YWtVUL6XZnNcQANwbRywrzWpCoMBEHKtVbKqF87sytUQcaFVaBRy2V+C2gobaO0VHbRwONfLaACpVqODArQ4BQ2aBKzdtA2BrvUBuvEAduYBFHOuiNpby2sulK61dHBx3ftcDDRBuRcXRFvD-L9bRoM5FleGz1yyFE6L0eVBUUMeCaqNTqsZ+qvXTN6campzljG0HFS4XxtBXijj0QuJgR60AnovZ289ca4TnPgTkAdibb0cHvY+k0jB80jtHLYz9gHsw-s6COCDxjYDAdU5KngWa5V1qI5RkjHqRmGoM3MyhmrUPoM6O+vhGHMFwHGLjYzYycO+o467ZAXsYACBAK1QQrESL0aUJWqA27+iJD3XjNgxjJ3TpDWGhTeJ+gDmXQW8D2TbHIcZbitALKIMYblQVgr8mYv+qtVAfBHBbV-IdZJZ1OQ3XSgDi4GGsEfz6e1XMozBqKOdYGTRprln0M1EwyZvr1GYQScI9KD14jDFgHc62TzR0fN+ZABKRA5z15wAHRjYgyXjrLwHBZlrzDrOkdGy5n15UTswaUwEC7zmVmuZu4hDzXnVu2384gRAYNbKQ2hkJkisWXiomOoCmy7qFFkaw9ojpWyo0dC6AUd7K3BBh39oHfzA6vATFyEWQ77XaH+NaPED426RB45GLZNrx3pS4qGDNSrFQDtlLRELDN2nCCzpK9KFdRaOBzsS146Hl3nvXfXB12ZAzuvkee-D27aHbMjec1q6XE38P9G4Ir9BcGIAIdHEh4XW6d0Rf3XYHIpWLUCpnRwT+kjkPrxcI+2GNJaAVDZMYoLgtjRhd3aOazanF2pZk-kh3CnIpt3oAO1n-O1VC441HvdW2EOflR9kHzGP4gBxqN9lPO2SJ7YO7Tl9kekd7stOKgdzWYPnczdzu3yGa-MPu1gHRXO6XIbj6ObJnCN2RXT959Hfts9Y-WwOrdnEGDDal1Rx7PXnuBJhBuXZbgRjEBbYPzPI+c-fcQBgctQOZuQLsKOQQ-B+Cf3fnKwQm+lsfeH+HXf63EBZ5xtX4jXXRdPew-DjgK+nA9l19FtxxlsM9H9Mdc8X839I599D8XAB0bAoE1Vz9L9r8tBb9EICgdw7p94VoP9TMZdv8es1c59zNBtTsrM31EF1Mp09cDdBcm9LNEFzswMSBYNJh9dbwdAstJgcs8sAMOMcC9wloGB8Ct9BA1sAstNpUG8Qtq1dN61EF1UEsEckJhDHxlogQJDfMvtx8pY2hy8CDxt585df9zE0ASlm8qC2AaCy06DOCGDedFNmDW87Dy0OD4NbxnDIoNC6wtDtpiAwCh8aAd8x9pCXDKCWDqC2CHCvCQNIi7t4FlNYMR1PCuCEjfDNZ7kEEGVr0k1ItxMn0pNpRrNRwEUmDf0VNbEjc1N7CEi8R69i09NpQ6MchGNXhEEagWMeApg0BaN6MOjEFKs4BqB-BUohDsipIegY8cjnVDpYAWCjoS9jFstmVZVaisC0ATZhwtZ3B+hjD1dTDRlSCSNyCqVfQKgylki-1s1eCmVctDcu80sBcE8tidiyAcjSIIAC4RgB0Gd8VRwWdg8lFaAOdpRqVEgrjaCNjnjQ83jsxY8Xj49nDGiO8vEq0okFUG1OEjcSk2iGMIkxhej2NJVcMl0hhwY2tXgThjEt0CSOjRxwkIBwh7kW0Pi9jvjfjtijISJZdYczFNk6TbYMFZhXBRVk1viUtPgqlQV2Spj9ifik9EBi4p1fZoBcYSJTiv80EYdml0kSl+TvVySSkioBVWhoAPhKtWM+j5S6xOSDidCpCB1IToT6jBceDhcmiMSoAFDsTlDdNw01DsCFTvjEBIZ6NDDf091VSUE9FoZPwOSviDjlTYz1ToZwyCSB0zSIALT+hDphl7lczYAOMeh8BIAoA2QC8F0Xh5iwcljvZkoidswRMhUxMH1iiX0kt3T5Ca060G0tBP48S6S3011+8CgyyKyqyuSSIASmcgS0ADsW1JzoBpyDiDCDiSJXS0B3C1V35xyUpyzVycgdsMB-i8V5yWxWdQTwTsxu9BdUTRQHi8t5M+EEsg8Ut7yES8QjSrsTSrcp0bdjotBw9hS6hRTvEJTIsjtS9CwVzKyTyxMUheQuQGBq8htldLttT+tJsCNcYADigfQGBZ9DNiCzDtEwlUomMrDmD6DEN7j+DO8RstAtADyJyoAjyELncxNMzIytSMLWKVcF9zDNlNdptEjmE6Knjhc1jHj8tmLBKOMBM2QoyeZhN8jRMijJMuyZRQ9CtjdRy+FNiJ1-UgLZVPTOdZDzLHzsLdUyKBTdccZgy0BlKhNOAr0b02ytLn06iNNBDSjDKtBjK6pkSedkMkT4THyQcg1gKLLEIZA5AFAVY34r8dBEB1ADB8ogA"
-                >
-                    Result on flems.io
-                </a>
-            </div>
-        </section>
-
-        <section id="n8" class="video-section">
-            <a name="n8" />
-
-            <header>8. Local dev setup</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=JfgRmatFDu0&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/JfgRmatFDu0/3.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">8:41</div>
-
-            <div class="description">
-                <p>
-                    Taking a break from TodoMVC, to set up a minimalistic local
-                    dev environment with npm and rollup.
-                </p>
-            </div>
-
-            <div class="assets">
-                <a href="./assets/nr8.zip"> project files (.zip) </a>
-            </div>
-        </section>
-
-        <section id="n9" class="video-section">
-            <a name="n9" />
-
-            <header>9. Editing items</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=R0DqGwUb3YM&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/R0DqGwUb3YM/3.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">3:56</div>
-
-            <div class="description">
-                <p>
-                    Back to working on TodoMVC. This time we add the feature for
-                    editing todo items. We use <em>conditional rendering</em>.
-                </p>
-            </div>
-
-            <div class="assets">
-                <a href="./assets/nr9.zip"> project files (.zip) </a>
-            </div>
-        </section>
-
-        <section id="n10" class="video-section">
-            <a name="n10" />
-
-            <header>10. Focus & Effects</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=U1nhjq3N1eI&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/U1nhjq3N1eI/3.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">9:32 </div>
-
-            <div class="description">
-                <p>
-                    For the first time, we introduce Hyperapp's concept of
-                    <em>effects</em>. We use them to focus the input elements in
-                    the DOM directly, for a better UX
-                </p>
-            </div>
-
-            <div class="assets">
-                <a href="./assets/nr10.zip"> project files (.zip) </a>
-            </div>
-        </section>
-
-        <section id="n11" class="video-section">
-            <a name="n11" />
-
-            <header>11. Refactoring the view</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=mSWfw5yb5cI&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/mSWfw5yb5cI/3.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">14:04</div>
-
-            <div class="description">
-                <p>
-                    The app is getting larger, so we will take a break from new
-                    features for a few videos. Instead we will break apart and
-                    structure the code, for more sustainable future development.
-                </p>
-
-                <p>
-                    In this video, we focus on breaking apart the view. There is
-                    nothing Hyperapp specific here. Just moving around
-                    javascript.
-                </p>
-            </div>
-
-            <div class="assets">
-                <a href="./assets/nr11.zip"> project files (.zip) </a>
-            </div>
-        </section>
-
-        <section id="n12" class="video-section">
-            <a name="n12" />
-
-            <header>12. Dispatch</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=VT0Dg8Y5fT8&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/VT0Dg8Y5fT8/3.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">6:56</div>
-
-            <div class="description">
-                <p>
-                    We learn about the <em>dispatch</em> function passed to
-                    <em>effects</em>. We use it for a trick that has plenty of
-                    uses. In this case we use it to implement another decorator.
-                </p>
-            </div>
-
-            <div class="assets">
-                <a href="./assets/nr12.zip"> project files (.zip) </a>
-            </div>
-        </section>
-
-        <section id="n13" class="video-section">
-            <a name="n13" />
-
-            <header>13. A Modularization pattern</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=rqikkuVtxfU&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/rqikkuVtxfU/3.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">7:09</div>
-
-            <div class="description">
-                <p>
-                    I introduce a pattern that I like for breaking parts of the
-                    app into separate, self-contained modules – views, actions
-                    and all(I call it the "wire pattern")
-                </p>
-                <p>
-                    Nothing Hyperapp specific here. If you have ideas for
-                    improving the pattern, or some entirely different pattern
-                    – go for it!
-                </p>
-            </div>
-
-            <div class="assets">
-                <a href="./assets/nr13.zip"> project files (.zip) </a>
-            </div>
-        </section>
-
-        <section id="n14" class="video-section">
-            <a name="n14" />
-
-            <header>14. A Modularization pattern, part 2</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=nj5WfyWdGJQ&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/nj5WfyWdGJQ/3.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">6:33</div>
-
-            <div class="description">
-                <p>
-                    We continue using the wire pattern to move the todo-list
-                    logic into its own module, leaving the main
-                    <code>index.js</code> devoid of any specific logic. Its sole
-                    purpose of tying modules together is now realized.
-                </p>
-
-                <p> Still nothing Hyperapp specific here. </p>
-                <p
-                    >I also break out the raw logic functions of a todo-list,
-                    mostly to illustrate why it might be a good idea.
-                </p>
-            </div>
-
-            <div class="assets">
-                <a href="./assets/nr14.zip"> project files (.zip) </a>
-            </div>
-        </section>
-
-        <section id="n15" class="video-section">
-            <a name="n15" />
-
-            <header>15. Check all</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=ZHRwp75eWIE&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/ZHRwp75eWIE/1.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">6:20</div>
-
-            <div class="description">
-                <p> Our refactoring sojourn completed, we return to TodoMVC </p>
-                <p>
-                    This time, the turn has come to implement the "check all"
-                    feature.
-                </p>
-            </div>
-
-            <div class="assets">
-                <a href="./assets/nr15.zip"> project files (.zip) </a>
-            </div>
-        </section>
-
-        <section id="n16" class="video-section">
-            <a name="n16" />
-
-            <header>16. Routing</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=py-_D4XW6Jw&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/py-_D4XW6Jw/default.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">14:03</div>
-
-            <div class="description">
-                <p>
-                    For the first time, we're introduced to Hyperapp's concept
-                    of
-                    <em>subscriptions</em>, and use it to implement basic
-                    routing.
-                </p>
-            </div>
-
-            <div class="assets">
-                <a href="./assets/nr16.zip"> project files (.zip) </a>
-            </div>
-        </section>
-
-        <section id="n17" class="video-section">
-            <a name="n17" />
-
-            <header>17. Filtering</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=DhAh8ZbRAWQ&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/DhAh8ZbRAWQ/default.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">3:10</div>
-
-            <div class="description">
-                <p>
-                    Last video we learned to set various filters using routing.
-                    In this one we actually apply the filters to the list of
-                    todos.
-                </p>
-            </div>
-
-            <div class="assets">
-                <a href="./assets/nr17.zip"> project files (.zip) </a>
-            </div>
-        </section>
-
-        <section id="n18" class="video-section">
-            <a name="n18" />
-
-            <header>18. Persistence</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=QqUr_NM6P_Y&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/QqUr_NM6P_Y/1.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">5:33</div>
-
-            <div class="description">
-                <p>
-                    We return to <em>subscriptions</em> for a closer look, and
-                    use them to persist the app state in local storage, so we
-                    don't have to input our data every time the page reloads
-                </p>
-            </div>
-
-            <div class="assets">
-                <a href="./assets/nr18.zip"> project files (.zip) </a>
-            </div>
-        </section>
-
-        <section id="n19" class="video-section">
-            <a name="n19" />
-
-            <header>19. TodoMVC Wrap-up</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=rDUgFutI2Q4&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/rDUgFutI2Q4/default.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">6:38</div>
-
-            <div class="description">
-                <p>
-                    We conclude the series by finishing off the last bunch of
-                    little features.
-                </p>
-                <p> Nothing new here. We're just coasting. </p>
-            </div>
-
-            <div class="assets">
-                <a href="./assets/nr19.zip"> project files (.zip) </a>
-            </div>
-        </section>
-
-        <section id="n20" class="video-section">
-            <a name="n20" />
-
-            <header>20. Bonus: Avoid wasting time on silly mistakes</header>
-
-            <div class="video-link">
-                <a
-                    target="_blank"
-                    href="https://www.youtube.com/watch?v=r7eezLoCEno&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
-                >
-                    <img
-                        class="thumbnail"
-                        src="http://i1.ytimg.com/vi/r7eezLoCEno/default.jpg"
-                        alt="go to video"
-                    />
-                </a>
-            </div>
-
-            <div class="time">9:06</div>
-
-            <div class="description">
-                <p>
-                    If you've found yourself spending a lot of time debugging,
-                    only to slap your forehead when you figure out you just gave
-                    the arguments in the wrong order or something similar,
-                    you'll appreciate this bonus video :)
-                </p>
-            </div>
-
-            <div class="assets">
-                <a href="./assets/nr20.zip"> project files (.zip) </a>
-            </div>
-        </section>
-
-        <footer>
-            <section id="licence">
-                <p>
-                    Licensed under<br />
-                    <a
-                        rel="licence"
-                        href="http://creativecommons.org/licences/by-nc/4.0/"
-                        ><img
-                            alt="Creative Commons licence"
-                            style="border-width: 0"
-                            src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png"
-                    /></a>
-                </p>
-            </section>
-            <section id="author">
-                <p>
-                    Created by
-                    <a href="https://github.com/zaceno">Zach Enochsson</a>
-                </p>
-                <p>
-                    Visit project on
-                    <a href="https://github.com/zaceno/codealong-hyperapp"
-                        >GitHub</a
-                    >
-                </p>
-                <p>
-                    <a href="https://github.com/zaceno/codealong-hyperapp">
-                        <img
-                            height="40"
-                            src="./assets/github-mark.png"
-                            alt="github logo"
-                        />
-                    </a>
-                </p>
-            </section>
-            <section id="jayway">
-                <a href="https://www.jayway.com">
-                    <img
-                        height="40"
-                        src="./assets/jayway-logo.png"
-                        alt="jayway logo"
-                    />
-                </a>
-            </section>
-        </footer>
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Hyperapp Code-along</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        font-family: Montserrat, sans-serif;
+        font-size: 14px;
+        --color-yellow: yellow;
+        --color-light-gray: #f2f2f2;
+        --color-light-blue: #b3d8db;
+        --color-pink: #f9cdda;
+        --color-blue: #4b8cca;
+        --color-gray: #bcbec0;
+        --color-brown: #754e2a;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        margin: 0;
+        padding: 0;
+      }
+      code {
+        font-weight: bold;
+        font-family: monospace;
+        color: var(--color-blue);
+      }
+
+      em {
+        font-weight: bold;
+        font-style: italic;
+      }
+
+      a:link {
+        color: black;
+        text-decoration: underline;
+      }
+
+      a:visited,
+      a:active {
+        color: #888;
+      }
+
+      body > header {
+        background: var(--color-blue);
+        height: 440px;
+        position: relative;
+      }
+
+      body > header h1 {
+        position: absolute;
+        color: #fff;
+        font-size: 72px;
+        font-weight: 200;
+        width: 490px;
+        top: 160px;
+        left: calc(50% - 50px);
+      }
+
+      #logo {
+        height: 142px;
+        width: 220px;
+        position: absolute;
+        top: 180px;
+        left: calc(50% - 340px);
+      }
+
+      body > section.intro {
+        background-color: var(--color-pink);
+        color: #000;
+        padding-top: 60px;
+        padding-bottom: 1px;
+      }
+
+      body > section.intro p {
+        width: 682px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 1.2em;
+        margin-bottom: 30px;
+      }
+
+      body > section.intro p.signature {
+        text-align: right;
+      }
+
+      nav {
+        background-color: var(--color-light-blue);
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        margin-bottom: 40px;
+        padding: 20px 0;
+        border-top: 9px black solid;
+        border-bottom: 2px black solid;
+      }
+      nav ul {
+        list-style-type: none;
+        width: 685px;
+        margin: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      nav ul li {
+        display: inline-block;
+        background-color: #fff;
+        height: 25px;
+        width: 25px;
+        border-radius: 12px;
+        line-height: 25px;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav ul li + li {
+        margin-left: 6px !important;
+      }
+
+      .video-section {
+        width: 650px;
+        padding: 20px;
+        position: relative;
+        min-height: 100px;
+        background-color: var(--color-light-gray);
+        margin-bottom: 40px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .video-section header {
+        margin-left: 140px;
+        font-weight: bold;
+        font-size: 23px;
+      }
+
+      .video-section .description {
+        margin-left: 140px;
+      }
+
+      .video-section .video-link {
+        position: absolute;
+        left: 20px;
+        top: 24px;
+      }
+
+      .video-section .time {
+        position: absolute;
+        top: 115px;
+        left: 20px;
+        width: 120px;
+        text-align: center;
+      }
+
+      .video-section .assets {
+        margin-left: 140px;
+        text-align: right;
+      }
+
+      .video-section p {
+        margin: 15px 0;
+      }
+
+      body > footer {
+        background: black;
+        color: white;
+        display: flex;
+        padding: 20px;
+      }
+      footer a:link {
+        color: #fff;
+      }
+
+      #author {
+        flex: 1 0 auto;
+        text-align: center;
+      }
+
+      #licence {
+        flex: 0 1 auto;
+        text-align: center;
+      }
+
+      #jayway {
+        flex: 0 1 auto;
+        text-align: right;
+      }
+      #jayway img {
+        border: 1px #fff solid;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div id="logo">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:serif="http://www.serif.com/"
+          width="100%"
+          height="100%"
+          viewBox="0 0 105 65"
+          version="1.1"
+          xml:space="preserve"
+          style="
+            fill-rule: evenodd;
+            clip-rule: evenodd;
+            stroke-linejoin: round;
+            stroke-miterlimit: 2;
+          "
+        >
+          <path
+            d="M64.409,37.484l-26.925,0l0,26.989l-10.5,0l0,-26.989l-26.984,0l0,-10.5l26.984,0l0,-26.984l10.5,0l0,26.984l21.803,0l5.122,10.5Zm8.694,-37.484l-12.384,0l31.444,64.473l12.383,0l-31.443,-64.473Z"
+            style="fill: #ffffff; fill-rule: nonzero"
+          />
+        </svg>
+      </div>
+      <h1>
+        Hyperapp <br />
+        code-along
+      </h1>
+    </header>
+    <section class="intro">
+      <p>
+        <a href="https://github.com/jorgebucaran/hyperapp">Hyperapp</a>
+        is an incredibly
+        <a href="https://unpkg.com/hyperapp@2.0.8/hyperapp.js">tiny</a>
+        and
+        <a
+          href="https://medium.com/javascript-in-plain-english/javascript-frameworks-performance-comparison-2020-cd881ac21fce"
+          >fast</a
+        >
+        framework for web-front-ends. It is also incredibly simple. The concepts
+        are few and easy to grasp – but it may be unclear how to go from there
+        to real world applications.
+      </p>
+      <p>
+        So I put together this series of short videos that take you keystroke by
+        keystroke from "Hello World" to fully-fledged
+        <a href="https://todomvc.com">TodoMVC</a> – with some thoughts on dev
+        setup and code structure along the way.
+      </p>
+      <p>
+        Watch the videos on double-speed, skip around and pick up ideas. Or
+        watch them carefully in order, copying me exactly. – However you prefer,
+        as long as you're having fun!
+      </p>
+      <p class="signature">/ Zach</p>
+    </section>
+    <nav>
+      <ul>
+        <li><a href="#n1">1</a></li>
+        <li><a href="#n2">2</a></li>
+        <li><a href="#n3">3</a></li>
+        <li><a href="#n4">4</a></li>
+        <li><a href="#n5">5</a></li>
+        <li><a href="#n6">6</a></li>
+        <li><a href="#n7">7</a></li>
+        <li><a href="#n8">8</a></li>
+        <li><a href="#n9">9</a></li>
+        <li><a href="#n10">10</a></li>
+        <li><a href="#n11">11</a></li>
+        <li><a href="#n12">12</a></li>
+        <li><a href="#n13">13</a></li>
+        <li><a href="#n14">14</a></li>
+        <li><a href="#n15">15</a></li>
+        <li><a href="#n16">16</a></li>
+        <li><a href="#n17">17</a></li>
+        <li><a href="#n18">18</a></li>
+        <li><a href="#n19">19</a></li>
+        <li><a href="#n20">20</a></li>
+      </ul>
+    </nav>
+    <section id="n1" class="video-section">
+      <a name="n1" />
+
+      <header>1. Hello World</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=sY8JTG581aA&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/sY8JTG581aA/1.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">4:08</div>
+
+      <div class="description">
+        <p>
+          We implement the "Hello World" of Hyperapp. In doing so we look at
+          Hyperapp's <code>h</code> and <code>text</code> function which define
+          a <em>virtual-dom</em> structure – and how Hyperapp
+          <em>renders</em> this to the actual DOM.
+        </p>
+      </div>
+
+      <div class="assets">
+        <a
+          target="_blank"
+          href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcA+AHTQAJeAEjABOMXhDi8sAT0HS2IjGza8AJjCy1EPFgHpOOlRFUBeLiCVtz3Pr3z3eAFUJjLvAO7QovAOa1eLqJ29jr6HJQgcDCw1MQQ9AiIIACsiAAsIAC+FOjYuEn4AFYIVHQMTMR4EFhstMLEvMCEFLyMAB7ELZaZvGDCtFi8AOQkxGxwiLq6AK5obADWPvh0WLqE8orKQzw8lgAUwDz8EGgQxIiN2Ue8AG4QMO4XewCUvCYcAXtDWBgnQy3AbK8ZDXfiEL6EACM-0a1CgGDgE2GPlEMDiaB8QyB7WIXyEUCg-gA6nUoKohs9nhRrgBdKnXNC0dQXVS0ajTHAMfA+NEAUVgnOIACFpABJVRfSwUniZZ48CIrNjQERINDTAlUKIxOIJPAATkQAAYsjkQJgcHhloiFfRGMwklkaZkgA"
+        >
+          Result on flems.io
+        </a>
+      </div>
+    </section>
+
+    <section id="n2" class="video-section">
+      <a name="n2" />
+
+      <header>2. Handling Events</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=7VAwzbY382k&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/7VAwzbY382k/1.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">6:39</div>
+
+      <div class="description">
+        <p>
+          We see how Hyperapp binds event handlers to
+          <em>dispatch</em> <em>actions</em>, which update the <em>state</em>.
+          This causes Hyperapp to recalculate the
+          <em>view</em>
+          and patch the DOM.
+        </p>
+      </div>
+
+      <div class="assets">
+        <a
+          target="_blank"
+          href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcA+AHTQAJeAEjABOMXhDi8sAT0HS2IjGza8AJjCy1EPFgHpOOlRFUBeLiCVtz3Pr3z3eAFUJjLvAO7QovAOa1eLqJ29jr6HJQgcDCw1MQQ9AiIIACsiAAsIAC+FOjYuEn4AFYIVHQMTMR4EFhstMLEvMCEFLyMAB7ELZaZvGDCtFi8AOQkxGxwiLq6AK5obADWPvh0WLqE8orKQzw8ZXANAMJQENTzAhhoqrDCvCa8ABT7GIwAlLccD8D2+E+MLdTHU4TXi-GDLQHzSQAal4AEZMi9dgkGgBJObTYjnS7XW4PUEtGAANwqbxMH3uX3s+N4mBwiF4RIq+GIGGEPhgxHwhIwUGmMARO0wygpPH4EDQEGI9OAtJg9KGAClaIQ+AARWgwIb-CHAgAM2VFvEJEBg7npjxZr3eAXuQywGHFWsa2V4yEN-EItsIsKdwABGDgwKGPlEHPFPiGLvaxFtQigUFoLSGvBhoPwspeLwo7ptIwATL6ozAOrajidIfKUyDLWCAeW4Jns7YPbaAEYY4j0X30Ounell05Yq4iIsloYD+ZSTWNnOeoZsQstN3N-itYsxoYABVgAbEFREvGktGmN1lQyzOZbQ3FbAxvsvq+IG3l0a1D-43N5curzzBsqbq6Abw9A3hi9JoremIXMOwgPgKK4ALqIrYSEATStDqPSqi0NQ0w4Aw+DssQACisD4cQABC0goqotqWOePDwREKxsNAIhIGg0zxlQUQxHECR4LCiC6lkOQgLKeDLIGzH0IwzBJFkCGZEAA"
+        >
+          Result on flems.io
+        </a>
+      </div>
+    </section>
+
+    <section id="n3" class="video-section">
+      <a name="n3" />
+
+      <header>3. JSX, hyperlit & @hyperapp/html</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=t6V2HexMdUE&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/t6V2HexMdUE/1.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">8:45</div>
+
+      <div class="description">
+        <p>
+          We take a look at a few systems for authoring views, which can give
+          you a better developer experience for the price of some small amount
+          of complexity/performance.
+        </p>
+        <p>
+          Going forward, <code>@hyperapp/html</code> is the system I will be
+          using in these videos.
+        </p>
+      </div>
+
+      <div class="assets">
+        <a
+          target="_blank"
+          href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcA+AHTQAJeAEjABOMXhDi8sAT0HS2IjGza8AJjCy1EPFgHpOOlRFUBeLiCVtz3Pr3z3eAFUJjLvAO7QovAOa1eLqJ29jr6HJQgcDCw1MQQ9AiIIACsiAAsIAC+FOjYuEn4AFYIVHQMTMR4EFhstMLEvMCWmbxgwrRYvADkJMRscIi6ugCuaGwA1j74dFi6hPKKyl081bX1Aa3tnT3EfQNDoxNTM3MLwpYAtMUAHhds5z5YGAD8mqrDsMtoQwACNwE8HhlOANADCUAg1HGAgwaFUsGEvBMvAAFCCMIwAJRIjio4D2fDoxgUXjUCFQga8Ikwabk8aSADUvAAjJlMUCEg0AJJjYbEGFwhFI1HUkkwABuFWxJlxKPx9lFvEwOEQvAlFXwxAwwh8MGI+HFGCgwxgbMBmGUcp4-AgaAgxFVwGVMFVXQAUrRCHwACK0GBdElkyH01UABmy1t44ogMHcqrRWqxONRkf4LCetps-GzvBYhGZpKgGDgcDMIB8oj1tp81iEUCgtBJwGp+GdmT0+azOdzhAATBxwcHKc3EzSgxT23N+6nsywAEZ84j0Xj0cfjEzAQdQgXwkSZAd0qQwPQL3b0Ls59gX7sABVgxbEFREvGktGGiOdM8vtrYfN4xAWMtGGuYhzCjI0TQ3Fs2xXO1eWIDceV-flYV3YQWl0a80zCGc9AzNAu0xChIzQWh1FVVRaGoYYcAYfBdWIABRWBaOIAAhaQuVUFEuksLp2TQNkIhmNhoBEPA5wwOdogiKIYjiBI8GZAB2RBmVDLIchAZ08GmEthPoRhmCSLIAF1MiAA"
+        >
+          JSX on flems.io </a
+        >,
+        <a
+          target="_blank"
+          href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcA+AHTQAJeAEjABOMXhDi8sAT0HS2IjGza8AJjCy1EPFgHpOOlRFUBeLiCVtz3Pr3z3eAFUJjLvAO7QovAOa1eLqJ29jr6HJQgcDCw1MQQ9AiIIACsiAAsIAC+FOjYuEn4AFYIVHQMTMR4EFhstMLEvMCWmbxgwrRYvADkJMRscIi6ugCuaGwA1j74dFi6hPKKyl081bX1AaTebR3dvf2DI2OT0x1zC8JQEMQA-Jqqw7DLaDxlcA0AwpfU4wIYaKqwYS8Ey8AAUbwwjAAlMCOGDgPZ8BDGBReNQvuMBrxkTBphjJABqXgARkyUJeCQaAEkxsNiL9-oDgWCcaiYAA3Cowkxw0EI+ys3iYHCIXgcir4YgYYQ+GDEfDsjBQYYwMk8HiWPk8fgQNBXUXAYUwUVdABStEIfAAIrQYF1UeiIN8sQAGbLa3jsiAwdyi8FS6GwjZkAAGHv4LCwGF1Nn4cd4LEIxLRUAwcDgZhAPlEct1PmsQigUFoqIAJMAcfgjZk9EnY-GE4QAEwcT5OzGi8tdbq8ImVx3OmtzFvhuMsABGdOI9F49AH4xM5bb3wZAJEmVbGKkMD0k+I07Q9fj7CPDYACrA02IKiJeNJaMMgUbR8fdWw6bxiAtM4wAB7EcxPSVFVFwrANcWrWc9VpYhQJpd96T+NdhBaXRTwjMJRz0KMYxDCgPTQWh1FFVRaGoYYcAYfBZWIABRWBKOIAAhaQqVUUEuksLpyTQMkIhmNhoBEJA0AeKAqCiGI4gSPBiVSZIMmyXIcDwaZ034+hGGYJIsgAXUyIA"
+          >hyperlit on flems.io</a
+        >,
+        <a
+          target="_blank"
+          href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcA+AHTQAJeAEjABOMXhDi8sAT0HS2IjGza8AJjCy1EPFgHpOOlRFUBeLiCVtz3Pr3z3eAFUJjLvAO7QovAOa1eLqJ29jr6HJQgcDCw1MQQ9AiIIACsiAAsIAC+FOjYuEn4AFYIVHQMTMR4EFhstMLEvMCWmbxgwrRYvADkJMRscIi6ugCuaGwA1j74dFi6hPKKyl081bX1jVgYEGgUvIwAHsS7hACMxwBMuwBGw8TE9Ltsu9tsty1tHd29-YMjY5PTDq6AAC8wUwksc1IUAA-JpVMNYMs0DwynAGgBhKAQajjAQYNCqWDCXgmXgACnRGEYAEpSRwKcB7PgqYxdtRsbiBrxWTBppzxpIANS8E6ZGmohINACSY1u+MJxNJFN5uxgADcKnSTAzyUz7KreJgcIheBqKvhiBhhD4YMR8OqMFBhjBxTweJY9Tx+NsIMRTcBjTBTV0AFK0Qh8AAitBgXXZAu5AAZst7eOqIDB3KbKVbafSpFs0OTkGn+Kc9RyMHBuV0fKI7dsfF1snsYIdyV0hFAoLRdl1eCLefggzSaRQywFzuSDsRO1icYKQ4OeXm+RzF3AxxPbPwbnd6Hr6BvcaaF7iFUSRK3Z-OBVI49vJ2wS5P+LeugAFWDVsQVES8NItDDCSQZdOOb7iHKc7AJB74LCGs7xnB6ZOi6prDkGO78DhOH0C8tymrKrzEJexLYbhvBuruvAALoSrY9EUWgtDqKaqi0NQww4Aw+C2sQACisA8cQABC0jSqonaWOBPDUREMxsNAIhIGgiJQFQUQxHECR4OcADMiBJlkOQgEGeDTDWCn0IwzBJFktGZEAA"
+          >@hyperapp/html on flems.io</a
+        >
+      </div>
+    </section>
+
+    <section id="n4" class="video-section">
+      <a name="n4" />
+
+      <header>4. Making a list</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=SH2uSjm83W4&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/SH2uSjm83W4/1.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">5:39</div>
+
+      <div class="description">
+        <p>
+          We begin our journey toward the TodoMVC implementation with the first
+          step of making a list, using just the knowledge gained in the previous
+          videos.
+        </p>
+      </div>
+
+      <div class="assets">
+        <a
+          target="_blank"
+          href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcACCAEwF4AdEBjZtBHAPQA+SiDgxY1YhHoJEIAAyIAjABYQAXwrpsuNfgBWCKnQZNieCFja0ATsQ7BhbfRzAvaWBwA5CTEbHCI4uIArmhsANYA5vh0WOKEAJ5sMC5eQfxojs5uHlgYEGgUHIwAHsRVFWzR9RwARs3E9FXRUFVQED5+AcGh4ZExcUkpAeIAApnZuSLppFAA-Fi03D0w+WgFNnDuAJJxzQByMADux4yBvBwAFEcYjFUwAG52AJQcvJJPYAFDgcfBgl5vYEcNDXCB3RAcT52fDEDAuRIwYj4D4YKDRGAFfTfAoHFTuACC3G4txg9yeEJgv3+HAAhAz8DCrnDaRw1hwGRwEUC0CCwfgGRQodysBEOMh2ZzpVUxezpXAALqSkXQ2Hw6E9XqEkmYESPYUgipwoWKvVoA0NO6y5DqwxQj4Qa4I56oxhMgFlCqPZBQi1nYhmkMg6pZGAIoK1YhBLVRqM4vGx-k+mAc3W05Mpjj0RrNBGnJrES43O75lNsKAYagwQi0KDcHJxgDqhFeHG4tA4GVo0R1MG41X7fbWexTRJrbQ69DN9Go-Wo8QRlOpd0M1RgdUeQQA1EFvt85z1va9s2r8GU2I9pQAVPfuZn9R4Jh93Z91U+nqHqmeUJoFsGZ9tQ0Q4Aw+AYsQACisBQcQABCGTHNwB55MSaBEgUMipGw0A5EgdpQL0sjyDAijKGgqggFoiA6AAnAYRggJgOB4CkcBWDQ9CMMwagGC6QA"
+        >
+          Result on flems.io
+        </a>
+      </div>
+    </section>
+
+    <section id="n5" class="video-section">
+      <a name="n5" />
+
+      <header>5. Crossing things off</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=AefLjTstbgk&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/AefLjTstbgk/3.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">6:50</div>
+
+      <div class="description">
+        <p>
+          We add the feature of being able to mark todo items as done. We learn
+          about actions with <em>custom payloads</em>. We also introduce some
+          CSS to make our app look a little fancier.
+        </p>
+        <p>
+          We also learn how hyperapp handles the
+          <code>class</code> prop in a convenient way, allowing you to specify
+          classes using objects
+        </p>
+      </div>
+
+      <div class="assets">
+        <a
+          target="_blank"
+          href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcACCAEwF4AdEBjZtBHAPQA+SiDgxY1YhHoJEIAAyIAjABYQAXwrpsuNfgBWCKnQZNieCFja0ATsQ7BhbfRzAvaWBwA5CTEbHCI4uIArmhsANYA5vh0WOKEAJ5sMC5eQfxojs5uHlgYEGgUHIwAHsRVFWzR9RwARs3E9FXRUFVQEFVwbBiVHIQwGNw5gzCKyqOEWj5+AcGh4ZExcUkpAeIAApnZuSLppFAA-Fi03D0w+WgFNnDuAJJxzQByMADur4yBXgcAAULwwjCqMAAbnYAJQcXiSEHAAocDj4DFgiGojhoX4QAGIDjQuz4YgYFyJGDEfBQjBQaIwAr6WEFJ4qdwAQW43H+MEBIKxMHhiI4AEIhfg8T8CfyOBcOEKOESUWg0Rj8EKKDjZVgIhxkJLpbqqhrJbq4ABdbVqjjcegwInIMD0uSmzHkxj4e1460442E3E9XrMtloZ7uAAqtESiVgABEHQjBZ6YA00FMaiKkaq0bB3D6YMnkGbU96HZacYXkBVM5bk2Lq7WYDVK7aXNToi41cBS+C03aHfpQ49MCJgbmuIViCqA-yiWhgw0AfrkNbB3inZbDDioRBfkTQansxwyhVgcgcWjxpMcsDFsDasRgUFo-aOJyREFYT+bWi0WeaAXle-5yHM9ATtQUAYHA+pBHOOAMC4GRBIYBogf+U5NM+k6YZhxBZI6wRPkEf54ZhdIMkRRr4gCZHkWi9CNM0RLvNh3x-HRGF4Ww0HUDAhC0FAUwuESQQAOqEOCg4cBktDRLiMAwNw1S0IOFwPAxHAsvReHtMQnRAcA9BQRA1DxES3K8gCaFPi+ADU36wrpaKWs53FgUoEHAFBMFwbq-QvKhVSXra5E9Ee-b4Ba+BlGwwLArqkYti0zZZgiSL9MBYUMcxOHceRBHZGJ1DjOZrS0DUpEFXhpWzPEylEpKTYZi2fo5VpTEfDOBrRrGCYOumdYuXhOk1WiQwjJB0GwSqhZNWWLV1votkpYlALJXUP41W520dRwbkgYdtpuWRaA3ER9rUNEiE0lSxAAKKwLdABCGSvNwL55KyaAsgUMipGw0A5HgrQYK08gyHICheWgqggAAHIgACsABMBhGCAmA4HgKSwQD9CMMwaiIP4tDuJOAC0lN0FAriU9wFLxJTiS5BkRKUq0wI6KjVQ83zqOwgA3Di1O0-TjMuA1Lgs2zHOJFzWgAJxVMrqtK8Los00J9Osxg7McAAxAjJsi7aYs6zLrR8RZRvqPbZtohbdMyz8hCykShtgN7jscM7usdkw8tc0rCOqwA7OHVThxrvv+1bVFEnQ3ZgHTPw5NbjJx9rLuUxk8hp8HwLKzoqvI8jVQAGzI5r5s5-THbcEXWgAMylxwLe8xw4e107lNg+ZrPyRmlOaBwdIuMC8cM0zOSy-rvd+-3GCD-4sTcJTWhEhPU-1wnK-xIv1MD0ka8j6j28Urv4sy5LzN6xktfDqO+xFK47hdlAwKCOsERRGAhM4D4ESLQGMsBhAQCAakcQ1BYKowuC6LA0AMi8E+LEAktBEAEnpBQH4iQSD7HUBQVGDsiE6FIRQBGDstDEOoRQch6ghY0KoeoAAZNwSBvF9a8DgD8YQgha4FAAFQeBxGUSkFQiSMJxMMHkFREhSLNs-AoJAyA2gqtwDIojbTODgASeYHN5DgggDCX2MpuDEEIESLQ9sACkvtxgQHwT1Gx6h7E4hPkPdee9L6T2PgfLxI91CLwAQwSmiDkFEjQdOWggwRhwEpnIFwEAwC+xvr46+ltKZu1lCEwmiSIAAC8iKo1RmwGoSiwwaK0UiQC2i0S6P0fQQx0ElCmJxOYyxRJK723KQ4mATiSDWLsb7WAYAerUHpNQYEyM3F+w7r0rMlTRzVI4LU8oaokQ3hEmMLQ9TfD5PToMnqJDpG2lCcQApxSiTkL6TifoeJKaOOcdYkhdzbRPkpvSJxaAk52ByMsgoqz1kVDWaeDZ+zGmwyJODOAQlmgwF9p0Ngrz1DvLRBVAyAQiRvIqfcmA4zFE4mSS8jgZyMWuBEpTXIHDoj6mRuitolKcjWPKePK+08cmMHhHC-o3BfaeLPhvdJ7K-HL1XsPDeWhF60BhC4VOtAfhEndjyJggK0DAvBaCkFmyDnkxyJC2gejoUcFhfCxg-TjlEnDmivFtpMWdCwES20Yyerko4J0qxHBXHuPtQEoVPjRW70FZKymgsBXMplsi1lNQ7QwXGCpHenL3bcvVXlZARUYACBAE+QQ9ZJxyqUJMqAXz+iJF+apNgvsLlXJKWUu1eYKgwCeQM0lLdw6MtkRwtACiyVspsf2-ttrq35IiVAA20SMFxLhoknIKSI0uBEguB0Ar-WhpFUm8Vp9Q3SoXUu71bLN0hu8dKxUQkeBpMtp7b2qSRwFHTZm7NuaQCWkQAA66cB9nyWIA8oi508R7rnsiwNm6b7ZJTcKQDVtyaOpAxyve4HcnLIfYRJ9KU82IEQFw-iglhIGsnDWl4GRYBEmwf0agl6XYZOng-J+VSOhdHvd1DNqHBB1XKpVPN+yvATFyOGP9K7Rbp1aPEAkXyRC8ZGPxZdAGqycOggbCov7+503MmYngXSOC3IbWMVtQytPDpxBu+DYGuWQY8Wu7xxmxVgdo1BmNQb-ESpPTy89-KPGRupZMCAdKiQMp058755a-m2BcCOsJejrkcFRgjRl10XBwtEhwZwFRGBhd3DkIt9JS0-KJMi0ZTaW1Wo7rFu1yiNUMZ7Pcwrzz9PafVfpQyb7aAfptCh7I2b2PxAqjUDD766VfuaL+mTiK70Vaxb8lebSiyTgqouoDtA2DZI016+tUH+4wYCMtixXrDO2lqz1FuSt3nlfa1mtjZVuucZffsz5zYGAxtXc5ke1nMm50zsKcUb83AjGIMh5jj6Lv1R6xhxAGBxn4aM4TOwRJBD8H4KjSuNjBD-ewixjrQOOO9ZfYgLryl9nHpe1exzCHaNfacO-X7aaAesZoJdkHOO8dNzBxDlw+ybBEx6nDhHSOtAo7G1KWi-I7DIQJ5ZonVGSeE43uGjz82o2Lcpq6rztL9Q6EZXNqlwGSUkBVz5tXnbJjdt7bi9VguZQAhF1os7aG6hccnJ6pOUzi52PmTY+tdHRzm91FbrCzR0fnZzehm79k2iVbF894VxPQNZNZkpNAi9NcLaW8rml+upEa88w6rbqfvO+b7WVsM3vLdIWtzTjHdPgfXfzXLrXiudeXLT-n91SfoNYqwNS45evm9m4CpAimMijVNIrWahkFqcTRo4FQzP7frX+dGQSt16mdvDLcb7WVOQFU-EpjUZVPAphoHX3KrfecmrUH8FAKAveASBQ-lAfZt-EkEVgJTTNI3fZdvkdY+fAu+8vA4P0BHtulZtHvBtLmGovOIokBUBtrPhwJXIbnIj2n5oygdjcntuVtFDfv3gARAIqMMFVraBwkMApqRmgMptbC1vEL7FATAa6t-qgXpj1PVtVo8mgQZoyo7hwMWtMj6vMkrP5jKsfoXGMPvmqh0hBoksMNJriIqicEiilJTBvvKiIQXBAOEJAsslgfyLfrgfgSMOWHiOzqATZrHmzIvJ8lMMnMYs0rgY8pYmvPgloX-u4IAY1s0jNJcqVNACpLNuLlHpLjHrnI3IvK9smkhruJAhAK0NAASAbCqgfs4dgf-oATboIM+jXraLQWgErovjcurjplwTwS7nMpTN6osp7gUNoWQDgf0IgIJHKmHhNogJ4TTO7MJDaNUboW4ZVi0TBF4e0U3A0ZDraHuHojEf0ARNvFEdbKNr9GGD0PgJAFAGlp+pOI-kRi-m-rIbJjokPiaqPgigvoStwc7rMrYm7qjIIUiotq8idgUIscsasXoZOMQVwopuQU2sso8dAM8YAaHoAZONkbkScQgYXouFAEsb8TkJ+hgPsm8aQVOBQaptQTiOwSwTokbl-gXt6mtqwc2uiXtmiGEQhmZnkhFkUkRFoKVgoXUAzLMK4DYRWv+nMeVj8SsTCaaikF2B2AwATpGg5kev4ZvK5nyuTsUOSAwE9sARLq4NRghvnJfoqonp5k3vSogcbhnrGloFoPcaOOyc8RgPUcofyfLoKSZmYQvGenyutmqSgTpp-sgTiTqXqQUAAvqmzu4YQQ0vsQYqaq0LykccSsVgOgFrcd6j-ucvkpFlSQUcvpproESW0MKSSWBiEequ6Wlsloasan6YcePi6nkdFkmZPloJGdeEwegYyspoSYyoRpSdYnGSOFDPILMLDPDIjjoIgOoAYNuEAA"
+        >
+          Result on flems.io
+        </a>
+      </div>
+    </section>
+
+    <section id="n6" class="video-section">
+      <a name="n6" />
+
+      <header>6. Add with Enter key</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=qLJiu5c5ybw&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/qLJiu5c5ybw/3.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">6:59</div>
+
+      <div class="description">
+        <p>
+          As we enable adding items using the enter key, we learn that actions
+          can return other actions, and we learn about creating
+          <em>action "guards"</em> or <em>"decorators"</em> (the nomenclature is
+          as yet unsettled)
+        </p>
+      </div>
+
+      <div class="assets">
+        <a
+          target="_blank"
+          href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcACCAEwF4AdEBjZtBHAPQA+SiDgxY1YhHoJEIAAyIAjABYQAXwrpsuNfgBWCKnQZNieCFja0ATsQ7BhbfRzAvaWBwA5CTEbHCI4uIArmhsANYA5vh0WOKEAJ5sMC5eQfxojs5uHlgYEGgUHIwAHsRVFWzR9RwARs3E9FXRUFVQEFVwbBiVHIQwGNw5gzCKyqOEWj5+AcGh4ZExcUkpAeIAApnZuSLppFAA-Fi03D0w+WgFNnDuAO4QxIQAorYuANIwDIcXgcAAUGDm9AAlMDJGCXhhGFVhhkoLRJjDeHDgAUOFwwGCUWjJvh4oCOAAyCkcIno7ik8m8JnBH6MFxBGEuGDEaIuNAcZAQpRdGkYVF0gC6uI4XJ5fI4CMYBX0BSeKjeH0IABUMC5EtyAGoYKDRGDAsFC+aYuGgxUwZFi4nca0eaUQAmg2kk4i6-XuKmi8Xe33c-AAN2Nps53N5-MFkNGXvpPr1oYjJpgUv5Mpj8rtytVaGe7gAknFmgA5GCvEuMQIg20+pFccvEF2gnHZ-Ddu0UaVoasfGBYRAtprEZVQwvFjgAQW43Frw-NjcRMBdAEI7fgB+86xwLgqm2bR528d38L23XWIgLt7uh1gqhft4+4BK+9nuPQYKPkGBjTkZ8e2PfBvwHD9+0HOtRzQHpegLR4i3VDgtVoRJElgAARH8V17FsphqF0zw4WB3HAs0QWQF9QIorM8Qo5AKkIiVzQ3RjmJgGp6JzOV+WAGi1yqCiVTQUSCi8Ds3UKYhTwfGCODgqBei4G8-w-DgKPUwxpTDCBq1HVdGBdMoKlBZBpTxcZJhyUFFlBWpiFBII0O-OcRA5KEoU-PE8VMtBzMs3y5ATDtqCgDA4FvIJ5OHOwXAyIJDAFILfLHZopOzNK0uILJf2CRygh87K0vTU1R3vaDh2Kkq8XoRpmlHPdtRDYgjQzUEy3HKsazrbzUuytgIuoGBCFoKAphcUcggAdUIRFNNoDgMloaJFJgGBuGqJbvwuIqBrS+gySyLkoqazVWRyAEMlBedFz6mrsv0fqsuy9piE6ALgHocKIGoeJRzupcsGSxznIAak8x68QlF6SpC4UvvCyLosffoXiSqoLNetKeiMmB8DffAyjYUFQUfLUuJaTiiNhUiIECnHsoapySNq3zcuyabqHGf7WloGp9qZkqedmMluAq2ifyYtAWOh2r6tbP80Iw7CfwaWWuMg4XfOe+W0qGEYwois6PC0o81zA6WaYlfRQap8m60puovIOjhYddpnYaC73s1h4q0BufLv2oaIcAYfA-S+WBw+IAAhDIS24Zy8inMS05kVI2GgHIkCU3pZHkWZEdUEAACYAGZtAMIwQEwHA8BSKLM-oRhmDURB-FodwSIAWl7ug0RcXvuF1eJe8SXIMlHPVWlBHQy6qBel7LqEAG5pX7wfXBHsecgnqeZ8SOetAATiqM+L9P9fN4H8ad8nsVRwAYgADnfjfsy3+-h9aYaAY4M-dQwDP54m-kPXurxCBDhfmAOBoCODgIflyJgR856n1fhfAA7FgqoWDr4IKQb-DMo46B8jAGiV4OQ-6mkIXfCBGR5CULQaCM+OgL4AFYOFVAAGwcJvl-ehO8uQSxlMfVhFd2EcArovDgWCBFgN7q0CESR-CxG4L3TQHAIwuFBEQ3eLgyTD0fhkBRiClEqMnqtWWvctCjh0XooRxCVFmP7so-6Vj1G9zLvY3Ujjt7D1HoYg+YoBHiTQPsIorh3C8igKCQQ6wIhRDAK3OAkdaDoVgMICAaTUjiGoFFMuFwAJYGgBkXgFZYgfFoIgD4xoKCvESCQfY6gKBlxAa0nQHSKCvxAVoNpfSKBdPUGvfpvT1AUm4DkoaYpeBwFeMIQQAiCgACpXTZjKHqCoo4RnSmGAuCoiQdmf3CSQMgn5+bcCBCRZwcAPjzBnvIREEAwwwAQe8bgnxRxaGAQAUgQeMCATTZIcB+eof50p3GqOsRogJvjdFuMsWomx6gzEpIYL3EpZTRyVJkrQQYIw4C9zkC4d0CC4XaL8foqBQ40Wt2JRAAAXvlMuZc2A1BOYWS5QI4T+XWXiW59z6CPIikoV57yeBfI4Dw4B7KAUwCBSQb5fyEGwDACC6gxpqCgg4eCxB0jZVEU5UhblHBeXlH5HCayk0xhaH5b4elVDFUgvabs7M6LiAMuZaOLpcrpT9AHL3QFwLvntL9dmRyvdjRArQKQuwORjUFFNeaioZqOB8pubQO5iNRwYFaHAcazQ3nSk6GwUN6hw14n5h9AIo4w0cv9TAdVxzpSkpDRwN1VbXCTV7rkKZ0RbwcMrW0btORvnsspQipxkDoHGQVONHgCCoWeJsRShxiKPHIo0VoMxtBXkuAobQV4o5oELiYImtAyb00WrTXyuEKTu45HtYKnNHA80FpNIweVzrRxYIrQ27M1bOgjg7aqptILO0cA+VKsFELANIphU4+Fjjl1bu8WY-mLge2lvHTUTSkVxhbXXdOmlxkL0s2QJzGAAgQCOUEKxEi+6lCaqgFG-oiRY3bTYAgj1XqWVsoA3iANMAg0KvbRXLBw79lTLQEcjtE6fkKYU-+nj9KsVQGnhwXF1SCVoCJSSslkLR1TUUj+JdCGvFrqpRYzdiGd1LuM7hydKGLM2J3fO-o3ByU-1gfAxCBQKNUZo3RkAEpEApNDnAe1q1iDCdgmZozWH96lqQ856ls71wOaS7-buwHUvEYCTO2lxrAt5WC1TejiBEAzJGmNCaT6SK8ZeKifKdT+jUG80PZD+iTFhK5R0LoAXWyUbK4IUWfMBb0ftV4CYuQiz5UDgOQhVDWjxA+FGkQs2RgjXi0t6UUyhgRU0xUYTSi0T-QlZ8wgPqVPSmDUqjgvrBMcCs1OwrpHMuQtc7CnzaXp29ay5NJzxHUN2ZhB+xdiWe19ogAO0cQ7nuRujRxuNvxVMYrud6jgZdX7DtDi4AtJnnAVDZAgpjf1jRsZjaOUtqqKgifuyCiuuOAPhPep9e1p3Gc3fDWzgbsaIsDs-KV7INHxvxH5jUSrguoskRi3F0ze2xL9ZrbGy0rz7WYew7QNgkDJXXex8OrX+8gMBD11dnZw7ufSNPrzwsIvqNjd5hLyboX7WRs4gwXD5nbOWd+wVn+Z2owcA3FEtwIxiAleG0Fp3YtJeVcQBgdVDXpQ2DbiCwQ-B+Blx4T8wQUfxwjdF7HibUvQuIHF5tTX338vWcK71kPYefQMHI9H0bNBnfx-L5XiWifk8uHtWnuwo5M-Z9z1ofP-m0A7iqrHBK1fferv99Z0HXjV6A+Szr3uarPUw7h49o3xne4pbbSQXtkxYe3h0FJyYMm5P1ovTPvccUGDz4d+VuoU2SLQYNyx7VsH9UfkBM+skIn9Hx4ogR39BAQtWJwY2h+cF9oU-cus-t68UE0AMMj8Usd9z9+1bxbtAMj9TcsBt9wNcDL9LdWdCwwC6wID0piAi9HcO849XcGModN9ddT9d8L999INjccsa0SCuDyDeDH80Ycke49ks0hVON31C0v0S0ddRxelD9BDf0EcwNm1QNpQf9lVwUEE90chD1Xhe4agT0eApg0ADD91jDe5NM4BqB-BlIxC6x0YYkoBOcJDiVcpYBj88pdti1sxpNDlvkNCp9CZXCJD6ZECV0fsUCQca919pRNlEgKglFcta1pUb8DlZN4crcxMHsnsXDhw3DojDZ+J9tpkjtRwTt6cztaALtkjfQ0id9Qj8if1HsCChM6jrciidD9dSEtVWE-l9VT4Edd0bDmExgLDz0dCMtiVhgdtTNXgTgEFI1DCD0pimEIBwgcljUIiSioj+gFRhhp8KJB9l83tA8AcS0qYR5ZhXBnlhV6ZA1Pg1Eml9jxCXhoj2dhUTZPUeZoAtoSJV8l94i69A8REzFXt-FA8PszE9I7lWhoAPhNNT1LDPjIjvjjioDaMKs3cSIUiWjwMfVr9ntdCXshiADe5QVDUQCCgDiyAjiIBEAxp914DVdEB-iB5oEJpPxGTSjjjfjY1uTASJpWSNj7VESIBkT+hcp7EckZTYAL0eh8BIAoA2RZd-UvDmtfCqMAiEEX0Hk31815DAihMSTKSoBtVdVflACy5xi1ilDQUBNjVVT1TNToiSIDsZljs0BhM3SoA1ToBPTji4DjjCTmi0BSCtCeE7clJgyNScgosMB7UfTqiWxTs-4Gj4hv120+igjb8Qj5M8MtBXTtTA1eiuiXtLjYSIF4T0dPVMd8otAWc1i7ipgyEnjONFtAjwl3SQzky30UheQuQGBNdHNQUJ0EjF9t1wcF0tpQ8nBokI8fckCwTXButp1GFlIj1MDssRDB1si79KDQUtB4yCgBykyCc30JT2SQTJzzy8MA8IEG8IcvN2Dh498jzntgjciSyzyLy0AH02QOSOdM1s1jS5DP1zSZQOjFNEdnStAwj3V6VmzvkyTLsYMCyq0a8YT9EoSL0QKn1OAIKZDc1TSYLNCXVqycNQUUKrICiQUcKXiGcmKednsmsmUWzMLEIZA5AFAS48Ac8dBEB1ADBbYgA"
+        >
+          Result on flems.io
+        </a>
+      </div>
+    </section>
+
+    <section id="n7" class="video-section">
+      <a name="n7" />
+
+      <header>7. Deleting items</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=ka-SBL7jsW4&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/ka-SBL7jsW4/3.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">2:20</div>
+
+      <div class="description">
+        <p>
+          Just adding the feature for deleting items. No new concepts, but we
+          emphasize the importance of
+          <em>not mutating state</em> (a k a always work with copies).
+        </p>
+      </div>
+
+      <div class="assets">
+        <a
+          target="_blank"
+          href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvAHgAcACCAEwF4AdEBjZtBHAPQA+SiDgxY1YhHoJEIAAyIAjABYQAXwrpsuNfgBWCKnQZNieCFja0ATsQ7BhbfRzAvaWBwA5CTEbHCI4uIArmhsANYA5vh0WOKEAJ5sMC5eQfxojs5uHlgYEGgUHIwAHsRVFWzR9RwARs3E9FXRUFVQEFVwbBiVHIQwGNw5gzCKyqOEWj5+AcGh4ZExcUkpAeIAApnZuSLppFAA-Fi03D0w+WgFNnDuAO4QxIQAorYuANIwDIcXgcAAUGDm9AAlMDJGCXhhGFVhhkoLRJjDeHDgAUOFwwGCUWjJvh4oCOAAyCkcIno7ik8m8JnBH6MFxBGEuGDEaIuNAcZAQpRdGkYVF0gC6uI4XJ5fI4CMYBX0BSeKjeH0IABUMC5EtyAGoYKDRGDAsFC+aYuGgxUwZFi4nca0eaUQAmg2kk4i6-XuKmi8Xe33c-AAN2Nps53N5-MFkNGXvpPr1oYjJpgUv5Mpj8rtytVaGe7gAknFmgA5GCvEuMQIg20+pFccvEF2gnHZ-Ddu0UaVoasfGBYRAtprEZVQwvFjgAQW43Frw-NjcRMBdAEI7fgB+86xwLgqm2bR528d38L23XWIgLt7uh1gqhft4+4BK+9nuPQYKPkGBjTkZ8e2PfBvwHD9+0HOtRzQHpegLR4i3VDgtVoRJElgAARH8V17FsphqF0zw4WB3HAs0QWQF9QIorM8Qo5AKkIiVzQ3RjmJgGp6JzOV+WAGi1yqCiVTQUS1TQF4OCw+RuUo+FjwaNBCOI6UyK4G9zWokC13wN8ePUiitMExgwJ-Hi30vNh+moGBQU4moqi0Kcvx-KybLshynJcvFZVjDwTPtDThzgYSf1E8TMBEDs3UKYhTwfGCODgqBemCrBb2QD8OAov8JUMaUwwgatR1XRgXTKCpQWQaU8XGSYclBRZQVqYhQSCNDvznEQOShKFPzxPFKrQarasGuQEw7agoAwOBbyCRLhzsFwMiCQwBTGwax2aGLsy2rbiCyX9glaoIBv2rb01NUd72g4dzouvF6EaZpRz3bUQ2II0M1BMtxyrGs636zb9usiEYEIWgoCmFxRyCAB1QhERy2gOAyWhomSmAYG4apUe-C4zpBrb6DJLIuTmt7NVZHIAQyUF50XIGHv2-Rgb2-b2mIToRuAehpogah4lHRmlywdbWvagBqXqWbxCV2YuibhV56bZvmx9+heNaqhqjmtp6MqYD0m98DKNhQXsustS4loHJdfpRv1-aXrakjHsGw7sjh6hxiF1paBqInnYu33ZjJbgbton8mOUrjIJD-bntbP80Iw7CfyUli5dZxWPYVYZVZmymPFyo9dI4uPuP0CXbat4cbbqPqc62rmeY7fmbOFgUZLIoKHPyqpJaCAANWXiY4BW+pBhWxtn7MFfOtAbmO79qGiHAGHwP0vlgTfiAAIQyEtuHavIXLZgoZFSNhoByJAUt6WRZITVQQAANgAJkQABWd+DCMCATAOA8ApDmtfegjBmBqEQP4Wg7gSIAFpEF0DRC4RB3BdTxEQYkXIGRRx6laKCHQn8qgkLIZ-KEABuaUyDUGuAwVgnIOC8EEMSEQrQABOJy3COBcOobQlBUMGG4LFKOAAxAADmkTQ7MdDhHoNaDNIWEj1BqNkXieRaDEGvEIEOCRYBDEaI4FokRXImBsKIZwyRTkADstiqi2M4QIuRQjtFKOuhwOgfIwBoleDkDxMBjGmPQRkeQfjLGgi4ToJyP8f5VHfj-Fxmi3EMK5JHGU7CokAGYYkcGyaQjgtjkkmMQa0CESR-CxG4IgzQHAIwuFBCExhLgyToNERkEpyDylC1wRjZSiCtCjgaU01JijlHxC6WUipfTqmIO-vU3Uoz6HoMwa0lhYoXGRX2EUVw7heRQFBIIdYEQohgEgXAbetB0KwGEBAS5qRxDUDmp-C4AEsDQAyLwCssQPi0EQB8Y0FBXiJBIPsdQFBP7qIhToaFFBJHqK0JCxFFBYXqCoUihF6gKTcHuWDL5cBXjCEEC4goAAqV02Yyh6gqKOdF0phgLgqIkOlsjIokDIJ+AO3AgQkWcHAD48wCHyERBAMMQTpTvG4J8UcWg1EAFJjHjAgKC+KfCFXGJ6ZU-pNSVnDKWd0mZVSBnqBKechgiD3mfNHD8uKtBBgjDgIguQLh3TGL1YsxpzTdFDjNZA51EAABex1P6fzYDUNlhZuVAjhMNSleJ+WCvoMKmaShxXGKlTKjg781HhqVTAFVJBZUarUjAMAarqDGmoKCH+6h5UmPybmoikakLRo4LG8o-I4T1RhmMLQ8bfD+v8YWtVUL6XZnNcQANwbRywrzWpCoMBEHKtVbKqF87sytUQcaFVaBRy2V+C2gobaO0VHbRwONfLaACpVqODArQ4BQ2aBKzdtA2BrvUBuvEAduYBFHOuiNpby2sulK61dHBx3ftcDDRBuRcXRFvD-L9bRoM5FleGz1yyFE6L0eVBUUMeCaqNTqsZ+qvXTN6campzljG0HFS4XxtBXijj0QuJgR60AnovZ289ca4TnPgTkAdibb0cHvY+k0jB80jtHLYz9gHsw-s6COCDxjYDAdU5KngWa5V1qI5RkjHqRmGoM3MyhmrUPoM6O+vhGHMFwHGLjYzYycO+o467ZAXsYACBAK1QQrESL0aUJWqA27+iJD3XjNgxjJ3TpDWGhTeJ+gDmXQW8D2TbHIcZbitALKIMYblQVgr8mYv+qtVAfBHBbV-IdZJZ1OQ3XSgDi4GGsEfz6e1XMozBqKOdYGTRprln0M1EwyZvr1GYQScI9KD14jDFgHc62TzR0fN+ZABKRA5z15wAHRjYgyXjrLwHBZlrzDrOkdGy5n15UTswaUwEC7zmVmuZu4hDzXnVu2384gRAYNbKQ2hkJkisWXiomOoCmy7qFFkaw9ojpWyo0dC6AUd7K3BBh39oHfzA6vATFyEWQ77XaH+NaPED426RB45GLZNrx3pS4qGDNSrFQDtlLRELDN2nCCzpK9KFdRaOBzsS146Hl3nvXfXB12ZAzuvkee-D27aHbMjec1q6XE38P9G4Ir9BcGIAIdHEh4XW6d0Rf3XYHIpWLUCpnRwT+kjkPrxcI+2GNJaAVDZMYoLgtjRhd3aOazanF2pZk-kh3CnIpt3oAO1n-O1VC441HvdW2EOflR9kHzGP4gBxqN9lPO2SJ7YO7Tl9kekd7stOKgdzWYPnczdzu3yGa-MPu1gHRXO6XIbj6ObJnCN2RXT959Hfts9Y-WwOrdnEGDDal1Rx7PXnuBJhBuXZbgRjEBbYPzPI+c-fcQBgctQOZuQLsKOQQ-B+Cf3fnKwQm+lsfeH+HXf63EBZ5xtX4jXXRdPew-DjgK+nA9l19FtxxlsM9H9Mdc8X839I599D8XAB0bAoE1Vz9L9r8tBb9EICgdw7p94VoP9TMZdv8es1c59zNBtTsrM31EF1Mp09cDdBcm9LNEFzswMSBYNJh9dbwdAstJgcs8sAMOMcC9wloGB8Ct9BA1sAstNpUG8Qtq1dN61EF1UEsEckJhDHxlogQJDfMvtx8pY2hy8CDxt585df9zE0ASlm8qC2AaCy06DOCGDedFNmDW87Dy0OD4NbxnDIoNC6wtDtpiAwCh8aAd8x9pCXDKCWDqC2CHCvCQNIi7t4FlNYMR1PCuCEjfDNZ7kEEGVr0k1ItxMn0pNpRrNRwEUmDf0VNbEjc1N7CEi8R69i09NpQ6MchGNXhEEagWMeApg0BaN6MOjEFKs4BqB-BUohDsipIegY8cjnVDpYAWCjoS9jFstmVZVaisC0ATZhwtZ3B+hjD1dTDRlSCSNyCqVfQKgylki-1s1eCmVctDcu80sBcE8tidiyAcjSIIAC4RgB0Gd8VRwWdg8lFaAOdpRqVEgrjaCNjnjQ83jsxY8Xj49nDGiO8vEq0okFUG1OEjcSk2iGMIkxhej2NJVcMl0hhwY2tXgThjEt0CSOjRxwkIBwh7kW0Pi9jvjfjtijISJZdYczFNk6TbYMFZhXBRVk1viUtPgqlQV2Spj9ifik9EBi4p1fZoBcYSJTiv80EYdml0kSl+TvVySSkioBVWhoAPhKtWM+j5S6xOSDidCpCB1IToT6jBceDhcmiMSoAFDsTlDdNw01DsCFTvjEBIZ6NDDf091VSUE9FoZPwOSviDjlTYz1ToZwyCSB0zSIALT+hDphl7lczYAOMeh8BIAoA2QC8F0Xh5iwcljvZkoidswRMhUxMH1iiX0kt3T5Ca060G0tBP48S6S3011+8CgyyKyqyuSSIASmcgS0ADsW1JzoBpyDiDCDiSJXS0B3C1V35xyUpyzVycgdsMB-i8V5yWxWdQTwTsxu9BdUTRQHi8t5M+EEsg8Ut7yES8QjSrsTSrcp0bdjotBw9hS6hRTvEJTIsjtS9CwVzKyTyxMUheQuQGBq8htldLttT+tJsCNcYADigfQGBZ9DNiCzDtEwlUomMrDmD6DEN7j+DO8RstAtADyJyoAjyELncxNMzIytSMLWKVcF9zDNlNdptEjmE6Knjhc1jHj8tmLBKOMBM2QoyeZhN8jRMijJMuyZRQ9CtjdRy+FNiJ1-UgLZVPTOdZDzLHzsLdUyKBTdccZgy0BlKhNOAr0b02ytLn06iNNBDSjDKtBjK6pkSedkMkT4THyQcg1gKLLEIZA5AFAVY34r8dBEB1ADB8ogA"
+        >
+          Result on flems.io
+        </a>
+      </div>
+    </section>
+
+    <section id="n8" class="video-section">
+      <a name="n8" />
+
+      <header>8. Local dev setup</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=JfgRmatFDu0&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/JfgRmatFDu0/3.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">8:41</div>
+
+      <div class="description">
+        <p>
+          Taking a break from TodoMVC, to set up a minimalistic local dev
+          environment with npm and rollup.
+        </p>
+      </div>
+
+      <div class="assets">
+        <a href="./assets/nr8.zip"> project files (.zip) </a>
+      </div>
+    </section>
+
+    <section id="n9" class="video-section">
+      <a name="n9" />
+
+      <header>9. Editing items</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=R0DqGwUb3YM&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/R0DqGwUb3YM/3.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">3:56</div>
+
+      <div class="description">
+        <p>
+          Back to working on TodoMVC. This time we add the feature for editing
+          todo items. We use <em>conditional rendering</em>.
+        </p>
+      </div>
+
+      <div class="assets">
+        <a href="./assets/nr9.zip"> project files (.zip) </a>
+      </div>
+    </section>
+
+    <section id="n10" class="video-section">
+      <a name="n10" />
+
+      <header>10. Focus & Effects</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=U1nhjq3N1eI&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/U1nhjq3N1eI/3.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">9:32</div>
+
+      <div class="description">
+        <p>
+          For the first time, we introduce Hyperapp's concept of
+          <em>effects</em>. We use them to focus the input elements in the DOM
+          directly, for a better UX
+        </p>
+      </div>
+
+      <div class="assets">
+        <a href="./assets/nr10.zip"> project files (.zip) </a>
+      </div>
+    </section>
+
+    <section id="n11" class="video-section">
+      <a name="n11" />
+
+      <header>11. Refactoring the view</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=mSWfw5yb5cI&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/mSWfw5yb5cI/3.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">14:04</div>
+
+      <div class="description">
+        <p>
+          The app is getting larger, so we will take a break from new features
+          for a few videos. Instead we will break apart and structure the code,
+          for more sustainable future development.
+        </p>
+
+        <p>
+          In this video, we focus on breaking apart the view. There is nothing
+          Hyperapp specific here. Just moving around javascript.
+        </p>
+      </div>
+
+      <div class="assets">
+        <a href="./assets/nr11.zip"> project files (.zip) </a>
+      </div>
+    </section>
+
+    <section id="n12" class="video-section">
+      <a name="n12" />
+
+      <header>12. Dispatch</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=VT0Dg8Y5fT8&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/VT0Dg8Y5fT8/3.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">6:56</div>
+
+      <div class="description">
+        <p>
+          We learn about the <em>dispatch</em> function passed to
+          <em>effects</em>. We use it for a trick that has plenty of uses. In
+          this case we use it to implement another decorator.
+        </p>
+      </div>
+
+      <div class="assets">
+        <a href="./assets/nr12.zip"> project files (.zip) </a>
+      </div>
+    </section>
+
+    <section id="n13" class="video-section">
+      <a name="n13" />
+
+      <header>13. A Modularization pattern</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=rqikkuVtxfU&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/rqikkuVtxfU/3.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">7:09</div>
+
+      <div class="description">
+        <p>
+          I introduce a pattern that I like for breaking parts of the app into
+          separate, self-contained modules – views, actions and all(I call it
+          the "wire pattern")
+        </p>
+        <p>
+          Nothing Hyperapp specific here. If you have ideas for improving the
+          pattern, or some entirely different pattern – go for it!
+        </p>
+      </div>
+
+      <div class="assets">
+        <a href="./assets/nr13.zip"> project files (.zip) </a>
+      </div>
+    </section>
+
+    <section id="n14" class="video-section">
+      <a name="n14" />
+
+      <header>14. A Modularization pattern, part 2</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=nj5WfyWdGJQ&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/nj5WfyWdGJQ/3.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">6:33</div>
+
+      <div class="description">
+        <p>
+          We continue using the wire pattern to move the todo-list logic into
+          its own module, leaving the main
+          <code>index.js</code> devoid of any specific logic. Its sole purpose
+          of tying modules together is now realized.
+        </p>
+
+        <p>Still nothing Hyperapp specific here.</p>
+        <p>
+          I also break out the raw logic functions of a todo-list, mostly to
+          illustrate why it might be a good idea.
+        </p>
+      </div>
+
+      <div class="assets">
+        <a href="./assets/nr14.zip"> project files (.zip) </a>
+      </div>
+    </section>
+
+    <section id="n15" class="video-section">
+      <a name="n15" />
+
+      <header>15. Check all</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=ZHRwp75eWIE&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/ZHRwp75eWIE/1.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">6:20</div>
+
+      <div class="description">
+        <p>Our refactoring sojourn completed, we return to TodoMVC</p>
+        <p>
+          This time, the turn has come to implement the "check all" feature.
+        </p>
+      </div>
+
+      <div class="assets">
+        <a href="./assets/nr15.zip"> project files (.zip) </a>
+      </div>
+    </section>
+
+    <section id="n16" class="video-section">
+      <a name="n16" />
+
+      <header>16. Routing</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=py-_D4XW6Jw&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/py-_D4XW6Jw/default.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">14:03</div>
+
+      <div class="description">
+        <p>
+          For the first time, we're introduced to Hyperapp's concept of
+          <em>subscriptions</em>, and use it to implement basic routing.
+        </p>
+      </div>
+
+      <div class="assets">
+        <a href="./assets/nr16.zip"> project files (.zip) </a>
+      </div>
+    </section>
+
+    <section id="n17" class="video-section">
+      <a name="n17" />
+
+      <header>17. Filtering</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=DhAh8ZbRAWQ&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/DhAh8ZbRAWQ/default.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">3:10</div>
+
+      <div class="description">
+        <p>
+          Last video we learned to set various filters using routing. In this
+          one we actually apply the filters to the list of todos.
+        </p>
+      </div>
+
+      <div class="assets">
+        <a href="./assets/nr17.zip"> project files (.zip) </a>
+      </div>
+    </section>
+
+    <section id="n18" class="video-section">
+      <a name="n18" />
+
+      <header>18. Persistence</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=QqUr_NM6P_Y&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/QqUr_NM6P_Y/1.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">5:33</div>
+
+      <div class="description">
+        <p>
+          We return to <em>subscriptions</em> for a closer look, and use them to
+          persist the app state in local storage, so we don't have to input our
+          data every time the page reloads
+        </p>
+      </div>
+
+      <div class="assets">
+        <a href="./assets/nr18.zip"> project files (.zip) </a>
+      </div>
+    </section>
+
+    <section id="n19" class="video-section">
+      <a name="n19" />
+
+      <header>19. TodoMVC Wrap-up</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=rDUgFutI2Q4&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/rDUgFutI2Q4/default.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">6:38</div>
+
+      <div class="description">
+        <p>
+          We conclude the series by finishing off the last bunch of little
+          features.
+        </p>
+        <p>Nothing new here. We're just coasting.</p>
+      </div>
+
+      <div class="assets">
+        <a href="./assets/nr19.zip"> project files (.zip) </a>
+      </div>
+    </section>
+
+    <section id="n20" class="video-section">
+      <a name="n20" />
+
+      <header>20. Bonus: Avoid wasting time on silly mistakes</header>
+
+      <div class="video-link">
+        <a
+          target="_blank"
+          href="https://www.youtube.com/watch?v=r7eezLoCEno&list=PLz4Tr-KTvcmVAOGGf9XKAUVmHqE86S-i5"
+        >
+          <img
+            class="thumbnail"
+            src="http://i1.ytimg.com/vi/r7eezLoCEno/default.jpg"
+            alt="go to video"
+          />
+        </a>
+      </div>
+
+      <div class="time">9:06</div>
+
+      <div class="description">
+        <p>
+          If you've found yourself spending a lot of time debugging, only to
+          slap your forehead when you figure out you just gave the arguments in
+          the wrong order or something similar, you'll appreciate this bonus
+          video :)
+        </p>
+        <p>
+          <b><i>Update:</i></b> Hyperapp now has official types. I have left the
+          video as is, but have updated the project files. My custom types for
+          hyperapp were removed, and updated the types for @hyperapp/html to use
+          the official ones.
+        </p>
+      </div>
+
+      <div class="assets">
+        <a href="./assets/nr20.zip"> project files (.zip) </a>
+      </div>
+    </section>
+
+    <footer>
+      <section id="licence">
+        <p>
+          Licensed under<br />
+          <a rel="licence" href="http://creativecommons.org/licences/by-nc/4.0/"
+            ><img
+              alt="Creative Commons licence"
+              style="border-width: 0"
+              src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png"
+          /></a>
+        </p>
+      </section>
+      <section id="author">
+        <p>
+          Created by
+          <a href="https://github.com/zaceno">Zach Enochsson</a>
+        </p>
+        <p>
+          Visit project on
+          <a href="https://github.com/zaceno/codealong-hyperapp">GitHub</a>
+        </p>
+        <p>
+          <a href="https://github.com/zaceno/codealong-hyperapp">
+            <img height="40" src="./assets/github-mark.png" alt="github logo" />
+          </a>
+        </p>
+      </section>
+      <section id="jayway">
+        <a href="https://www.jayway.com">
+          <img height="40" src="./assets/jayway-logo.png" alt="jayway logo" />
+        </a>
+      </section>
+    </footer>
+  </body>
 </html>
